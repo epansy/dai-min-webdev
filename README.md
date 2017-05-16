@@ -7,7 +7,7 @@ Graduate student in NEU Align program.
 
 Heroku link: https://dashboard.heroku.com/apps/dai-min-webdev
 
-Project link:
+Project link: http://localhost:3000/project/index.html
 
-Assignments link:
+Assignments link: http://localhost:3000/assignment/index.html
 
