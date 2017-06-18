@@ -1,0 +1,66 @@
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid row">
+
+        <div class="navbar-text pull-left">
+            <a href="#!/user/{{model.uid}}/website/{{model.wid}}/page" class="cl-text-black cl-icon-padding">
+          <span class="glyphicon glyphicon-chevron-left">
+          </span>
+            </a>
+        </div>
+        <div class="navbar-text pull-right">
+            <a href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/new"
+               class="cl-icon-padding cl-text-black">
+          <span class="glyphicon glyphicon-plus">
+          </span>
+            </a>
+        </div>
+        <a class="navbar-brand cl-text-white cl-text-bold" href="#">
+            Widgets
+        </a>
+    </div>
+</nav>
+
+
+<div class="container cl-container-padding">
+    <div ng-repeat="widget in model.widgets">
+        <div ng-switch="model.widget.widgetType">
+            <div class="widget-toolbar">
+                <a href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{widget._id}}">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </a>
+                <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </div>
+            <div ng-switch="widget.widgetType">
+                <div ng-switch-when="HEADING">
+                    <div ng-include="'views/widget/templates/widget-heading.view.client.html'"></div>
+                </div>
+                <div ng-switch-when="IMAGE">
+                    <div ng-include="'views/widget/templates/widget-image.view.client.html'"></div>
+                </div>
+                <div ng-switch-when="YOUTUBE">
+                    <div ng-include="'views/widget/templates/widget-youtube.view.client.html'"></div>
+                </div>
+                <div ng-switch-when="HTML">
+                    <div ng-include="'views/widget/templates/widget-html.view.client.html'"></div>
+                </div>
+            </div>
+        </div>
+
+        <a class="margin-top btn btn-danger btn-block" ng-click="model.deleteWidget(model.wgid)">Delete</a>
+    </div>
+
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid row">
+        <div class="pull-right navbar-text">
+
+            <a href="#!/user/{{model.uid}}" class="tv-icon-padding">
+                <span class="glyphicon glyphicon-user"></span>
+            </a>
+
+        </div>
+    </div>
+</nav>
+

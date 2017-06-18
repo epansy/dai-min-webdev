@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Widget Heading</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="css/style.css" rel="stylesheet"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-</head>
-<body>
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid row">
@@ -34,17 +24,28 @@
 <div class="container">
     <form>
         <div class="form-group">
-            <label for="widget-name">Name</label>
-            <input type="text" class="form-control" id="widget-name" placeholder="Name">
+            <label for="image-name">Name</label>
+            <input type="text" class="form-control" id="image-name" placeholder="Name">
         </div>
         <div class="form-group">
-            <label for="widget-text">Text</label>
-            <input type="text" class="form-control" id="widget-text" placeholder="Text">
+            <label for="image-text">Text</label>
+            <input type="text" class="form-control" id="image-text" placeholder="Text">
         </div>
         <div class="form-group">
-            <label for="widget-size">Size</label>
-            <input type="text" class="form-control" id="widget-size" placeholder="Size">
+            <label for="image-url">URL</label>
+            <input type="text" class="form-control" id="image-url" placeholder="URL">
         </div>
+        <div class="form-group">
+            <label for="image-width">Size</label>
+            <input type="text" class="form-control" id="image-width" placeholder="100%">
+        </div>
+        <div class="form-group">
+            <label>Upload</label><br>
+            <label class="btn btn-default btn-file">
+                <input type="file" hidden>
+            </label>
+        </div>
+        <a href="widget-list.html" class="btn btn-primary btn-block">Upload Image</a>
         <a class="btn btn-danger  btn-block" href="widget-list.html">Delete</a>
     </form>
 </div>
@@ -60,7 +61,3 @@
         </div>
     </div>
 </nav>
-
-
-</body>
-</html>

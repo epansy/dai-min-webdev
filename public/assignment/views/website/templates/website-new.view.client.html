@@ -1,0 +1,76 @@
+<nav class="navbar navbar-fixed-top cl-blue-navbar">
+    <div class="row">
+        <div class="col-xs-4 hidden-xs">
+            <div class="container-fluid">
+                <p class="navbar-text pull-left">
+                    <a href="#!/user/{{model.uid}}/website" class="navbar-link cl-text-white">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                </p>
+                <a class="cl-text-white navbar-brand cl-text-bold" href="#">
+                    Websites
+                </a>
+                <a href="#!/user/{{model.uid}}/website/new" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-8">
+            <div class="container-fluid">
+                <a class="cl-text-white navbar-brand cl-text-bold" href="#">
+                    New Websites
+                </a>
+                <a href="model.newWebsite(model.websiteName, model.websiteDesc)" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="contain-fluid">
+    <div class="col-xs-4 hidden-xs">
+        <ul class="list-group">
+            <li ng-repeat="website in model.websites" class="list-group-item cl-list-item-borderless">
+                <a href="#!/user/{{website.developerId}}/website/{{website._id}}">
+                    <span class="glyphicon glyphicon-cog pull-right"></span>
+                </a>
+                <a href="#!/user/{{website.developerId}}/website/{{website._id}}/page">
+                    {{website.name}}
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-xs-8">
+        <div ng-show="model.error" class="alert alert-danger" role="alert">{{model.error}}</div>
+        <form>
+            <div class="form-group">
+                <label for="websiteName">Name</label>
+                <input type="text"
+                       class="form-control"
+                       id="websiteName"
+                       placeholder="Name"
+                       ng-model="model.websiteName"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="websiteDesc">Description</label>
+                <textarea class="form-control"
+                          id="websiteDesc"
+                          rows="5"
+                          placeholder="Description"
+                          ng-model="model.websiteDesc">
+                </textarea>
+            </div>
+        </form>
+    </div>
+</div>
+
+<nav class="navbar navbar-fixed-bottom cl-blue-navbar">
+    <div class="container-fuild">
+        <a href="#!/user/{{model.uid}}" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+            <span class="glyphicon glyphicon-user"></span>
+        </a>
+    </div>
+</nav>

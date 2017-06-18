@@ -1,19 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="WebAppMaker">
 <head>
     <meta charset="UTF-8">
-    <title>CS5610 Web Development</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel= "stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.js"></script>
+
+    <link href="css/style.css" rel="stylesheet"/>
+
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+
+    <!--Controllers-->
+    <script src="views/user/user.controller.client.js"></script>
+    <script src="views/website/website.controller.client.js"></script>
+    <script src="views/page/page.controller.client.js"></script>
+    <script src="views/widget/widget.controller.client.js"></script>
+
+    <!--Services-->
+    <script src="services/user.service.client.js"></script>
+    <script src="services/website.service.client.js"></script>
+    <script src="services/page.service.client.js"></script>
+    <script src="services/widget.service.client.js"></script>
+    <title>Web App Maker</title>
 
 </head>
 <body>
 
-<!-- Header -->
-<div class="container-fluid">
-    <h1>ASSIGNMENT</h1>
-    <a class="btn btn-primary" href="login.html">My Assignment</a>
-</div>
+<div ng-view></div>
+
+
 
 <!-- Footer -->
 <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-blue-grey">

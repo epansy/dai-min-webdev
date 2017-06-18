@@ -1,0 +1,56 @@
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid row">
+
+        <div class="navbar-text pull-left">
+            <a href="#!/user/{{model.uid}}/website/{{model.wid}}/page" class="cl-text-black cl-icon-padding">
+          <span class="glyphicon glyphicon-chevron-left">
+          </span>
+            </a>
+        </div>
+        <div class="navbar-text pull-right">
+            <a href="#!/user/{{model.uid}}/website/{{model.wid}}/page" class="cl-icon-padding cl-text-black">
+          <span class="glyphicon glyphicon-ok">
+          </span>
+            </a>
+        </div>
+        <a class="navbar-brand cl-text-white cl-text-bold" href="#">
+            Pages
+        </a>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div ng-show="model.updated" class="alert alert-success" role="alert">{{model.updated}}</div>
+    <label for="pageName">Page Name</label>
+    <input ng-model="model.page.name"
+           type="text"
+           class="form-control"
+           id="pageName"
+           placeholder="Page Name"
+           required>
+    <label for="pageTitle">Page Title</label>
+    <input ng-model="model.page.description"
+           class="form-control"
+           type="text"
+           placeholder="Page Title"
+           id="pageTitle"
+           required>
+
+    <a class="btn btn-danger btn-block" ng-click="model.deletePage(model.pid)">
+        Delete
+    </a>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid row">
+        <div class="pull-right navbar-text">
+
+            <a href="#!/user/{{model.uid}}" class="tv-icon-padding">
+                <span class="glyphicon glyphicon-user"></span>
+            </a>
+
+        </div>
+    </div>
+</nav>
