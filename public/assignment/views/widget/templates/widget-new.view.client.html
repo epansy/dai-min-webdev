@@ -20,7 +20,7 @@
 
 <div class="container">
     <div ng-show="model.error" class="alert alert-danger" role="alert">{{model.error}}</div>
-    <div ng-switch="model.wtype">
+    <div ng-switch="model.widgetType">
         <div ng-switch-when="HEADING">
             <div ng-include src="'views/widget/templates/heading/widget-header-new.view.client.html'"></div>
         </div>

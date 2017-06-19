@@ -29,7 +29,7 @@
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
-        vm.widgetType = $routeParams.wtype;
+        vm.widgetType = $routeParams.widgetType;
         vm.createWidget = createWidget;
         vm.createError = null;
 
