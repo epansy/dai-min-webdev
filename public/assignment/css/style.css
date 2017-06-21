@@ -31,6 +31,10 @@ a:hover{
     color: #000000;
 }
 
+.cl-text-blue{
+    color: #337ab7
+}
+
 .cl-text-bold{
     font-weight: bold;
 }
@@ -93,6 +97,34 @@ a:hover{
     border-bottom: 0 none;
     border-left: 0 none;
     border-right: 0 none;
+}
+
+
+.margin-left {
+    margin-left: 0px;
+}
+
+.margin-left-20 {
+    margin-left: 20px;
+}
+
+.margin-right {
+    margin-right: 30px;
+}
+
+.margin-bottom {
+    margin-bottom: 30px;
+}
+
+.margin-top {
+    margin-top: 3px;
+}
+
+.widget-toolbar {
+    background-color: rgba(255,255,255,0.8);
+    position: absolute;
+    right: 20px;
+    color: darkslategray;
 }
 
 .cl-widget-images{

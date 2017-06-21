@@ -40,7 +40,7 @@
                     return;
                 }
             }
-            if (vm.widgetType === 'HEADER') {
+            if (vm.widgetType === 'HEADING') {
                 if (vm.widgetText === null || vm.widgetText === undefined) {
                     vm.createError = "Text is required for Header";
                     return;
@@ -69,7 +69,7 @@
         vm.editWidget = editWidget;
         vm.deleteWidget = deleteWidget;
 
-        if (vm.widget.widgetType === "HEADER") {
+        if (vm.widget.widgetType === "HEADING") {
             vm.widgetName = vm.widget.name;
             vm.widgetText = vm.widget.text;
             vm.widgetSize = vm.widget.size;

@@ -24,14 +24,13 @@
 
 <div class="container cl-container-padding">
     <div ng-repeat="widget in model.widgets">
-        <div ng-switch="model.widgetType">
             <div class="widget-toolbar">
                 <a href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{widget._id}}">
                     <span class="glyphicon glyphicon-cog"></span>
                 </a>
                 <span class="glyphicon glyphicon-menu-hamburger"></span>
             </div>
-            <div ng-switch="widgetType">
+            <div ng-switch="model.widgetType">
                 <div ng-switch-when="HEADING">
                     <div ng-include="'views/widget/templates/widget-header-edit.view.client.html'"></div>
                 </div>
@@ -42,7 +41,6 @@
                     <div ng-include="'views/widget/templates/widget-youtube-edit.view.client.html'"></div>
                 </div>
             </div>
-        </div>
 
         <a class="margin-top btn btn-danger btn-block" ng-click="model.deleteWidget(model.wgid)">Delete</a>
     </div>

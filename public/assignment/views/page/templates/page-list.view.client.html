@@ -1,7 +1,5 @@
-
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid row">
-
+    <div class="container-fluid">
         <div class="navbar-text pull-left">
             <a href="#!/user/{{model.uid}}/website" class="cl-text-black cl-icon-padding">
           <span class="glyphicon glyphicon-chevron-left">
@@ -21,7 +19,7 @@
 </nav>
 
 
-<div class="container-fluid cl-container-padding">
+<div class="container">
     <ul class="list-group cl-list-group-borderless">
         <li ng-repeat="page in model.pages" class="list-group-item cl-list-item-borderless">
             <a href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{page._id}}">
