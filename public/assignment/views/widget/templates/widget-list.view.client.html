@@ -32,17 +32,16 @@
             </div>
             <div ng-switch="model.widgetType">
                 <div ng-switch-when="HEADING">
-                    <div ng-include="'views/widget/templates/widget-header-edit.view.client.html'"></div>
+                    <div ng-include="'views/widget/templates/heading/widget-header.view.client.html'"></div>
                 </div>
                 <div ng-switch-when="IMAGE">
-                    <div ng-include="'views/widget/templates/widget-image-edit.view.client.html'"></div>
+                    <div ng-include="'views/widget/templates/image/widget-image.view.client.html'"></div>
                 </div>
                 <div ng-switch-when="YOUTUBE">
-                    <div ng-include="'views/widget/templates/widget-youtube-edit.view.client.html'"></div>
+                    <div ng-include="'views/widget/templates/youtube/widget-youtube.view.client.html'"></div>
                 </div>
             </div>
 
-        <a class="margin-top btn btn-danger btn-block" ng-click="model.deleteWidget(model.wgid)">Delete</a>
     </div>
 
 </div>

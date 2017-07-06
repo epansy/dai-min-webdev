@@ -9,8 +9,8 @@
         <a class="navbar-brand cl-text-bold">
             Create Widget
         </a>
-        <div class="navbar-text pull-right cl-icon-padding">
-            <a ng-click="model.createWidget(model.widget.size, model.widget.width, model.widget.text, model.widget.url)"
+        <div class="navbar-text pull-right">
+            <a ng-click="model.createWidget(model.widgetName, model.widgetText, model.widgetUrl, model.widgetSize, model.widgetWidth)"
                class="cl-text-black">
                 <span class="glyphicon glyphicon-ok"></span>
             </a>
@@ -22,13 +22,13 @@
     <div ng-show="model.error" class="alert alert-danger" role="alert">{{model.error}}</div>
     <div ng-switch="model.widgetType">
         <div ng-switch-when="HEADING">
-            <div ng-include src="'views/widget/templates/heading/widget-header-new.view.client.html'"></div>
+            <div ng-include src="'views/widget/templates/heading/widget-header-edit.view.client.html'"></div>
         </div>
         <div ng-switch-when="IMAGE">
-            <div ng-include src="'views/widget/templates/image/widget-image-new.view.client.html'"></div>
+            <div ng-include src="'views/widget/templates/image/widget-image-edit.view.client.html'"></div>
         </div>
         <div ng-switch-when="YOUTUBE">
-            <div ng-include src="'views/widget/templates/youtube/widget-youtube-new.view.client.html'"></div>
+            <div ng-include src="'views/widget/templates/youtube/widget-youtube-edit.view.client.html'"></div>
         </div>
     </div>
 </div>

@@ -71,9 +71,6 @@
                 controller: "EditWidgetController",
                 controllerAs: "model"
             })
-            .when("/", {
-                templateUrl : "assignments.html"
-            })
             .otherwise({
                 redirectTo : "/"
             });

@@ -6,12 +6,27 @@
         .controller("CreateWidgetController", CreateWidgetController)
         .controller("EditWidgetController", EditWidgetController);
 
-    function WidgetListController($routeParams, WidgetService) {
+    function WidgetListController($routeParams, $sce, WidgetService) {
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
         vm.widgets = WidgetService.findWidgetsByPageId(vm.pid);
+
+        vm.trustThisContent = trustThisContent;
+        vm.getYoutubeEmbedUrl = getYoutubeEmbedUrl;
+
+        function trustThisContent(html) {
+            return $sce.trustAsHtml(html);
+        }
+
+        function getYoutubeEmbedUrl(youtubeLink) {
+            var embedUrl = "https://www.youtube.com/embed/";
+            var youtubeLinkParts = youtubeLink.split('/');
+            var id = youtubeLinkParts[youtubeLinkParts.length - 1];
+            embedUrl += id;
+            return $sce.trustAsResourceUrl(embedUrl);
+        }
     }
 
     function NewWidgetController($routeParams, $timeout, WidgetService) {
@@ -33,26 +48,27 @@
         vm.createWidget = createWidget;
         vm.createError = null;
 
-        function createWidget() {
-            if (vm.widgetType === 'IMAGE' || vm.widgetType === 'YOUTUBE') {
-                if (vm.widgetUrl === null || vm.widgetUrl === undefined) {
+
+        function createWidget(name, text, url, size, width) {
+            if (vm.widgetType === "IMAGE" || vm.widgetType === "YOUTUBE") {
+                if (url === null || url === undefined) {
                     vm.createError = "Url is required for Image/Youtube";
                     return;
                 }
             }
-            if (vm.widgetType === 'HEADING') {
-                if (vm.widgetText === null || vm.widgetText === undefined) {
+            if (vm.widgetType === "HEADING") {
+                if (text === null || text === undefined) {
                     vm.createError = "Text is required for Header";
                     return;
                 }
             }
             var newWidget = {
-                name: vm.widgetName,
-                text: vm.widgetText,
+                name: name,
+                text: text,
                 widgetType: vm.widgetType,
-                size: vm.widgetSize,
-                width: vm.widgetWidth,
-                url: vm.widgetUrl
+                size: size,
+                width: width,
+                url: url
             };
             WidgetService.createWidget(vm.pid, newWidget);
             $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
@@ -66,33 +82,18 @@
         vm.pid = $routeParams.pid;
         vm.wgid = $routeParams.wgid;
         vm.widget = WidgetService.findWidgetById(vm.wgid);
-        vm.editWidget = editWidget;
+        vm.updatewidget = updateWidget;
         vm.deleteWidget = deleteWidget;
 
-        if (vm.widget.widgetType === "HEADING") {
-            vm.widgetName = vm.widget.name;
-            vm.widgetText = vm.widget.text;
-            vm.widgetSize = vm.widget.size;
-        } else if (vm.widget.widgetType === "IMAGE") {
-            vm.widgetName = vm.widget.name;
-            vm.widgetText = vm.widget.text;
-            vm.widgetUrl = vm.widget.url;
-            vm.widgetWidth = vm.widget.width;
-        } else if (vm.widget.widgetType === "YOUTUBE") {
-            vm.widgetName = vm.widget.name;
-            vm.widgetText = vm.widget.text;
-            vm.widgetUrl = vm.widget.url;
-            vm.widgetWidth = vm.widget.width;
-        }
-
-        function editWidget() {
+        function updateWidget() {
             var latestData = {
-                name: vm.widgetName,
-                text: vm.widgetText,
+                _id: vm.wgid,
                 widgetType: vm.widget.widgetType,
-                size: vm.widgetSize,
-                width: vm.widgetWidth,
-                url: vm.widgetUrl
+                pageId: vm.widget.pageId,
+                size: vm.widget.size,
+                text: vm.widget.text,
+                width: vm.widget.width,
+                url: vm.widget.url
             };
             WidgetService.updateWidget(vm.wgid, latestData);
             $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");

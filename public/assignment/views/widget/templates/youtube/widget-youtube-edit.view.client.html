@@ -1,18 +1,4 @@
-<nav id="profile_nav_bar" class="navbar navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <p class="navbar-text pull-left">
-                <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/new" class="navbar-link">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-            </p>
-            <a class="navbar-brand">
-                Create Image Widget
-            </a>
-        </div>
-    </div>
-</nav>
-<!--Body of the Page-->
+
 <div class="container">
     <form>
         <div class="form-group">
@@ -32,13 +18,5 @@
             <label for="widget-youtube-width">Width</label>
             <input  ng-model="model.widgetWidth" type="text" class="form-control" id="widget-youtube-width" placeholder="100%">
         </div>
-        <a ng-click="model.editWidget()" class="btn btn-primary btn-block" id="widget-youtube-create-btn">Update</a>
     </form>
-    <div ng-show="model.createError" class="alert alert-danger" role="alert">{{model.createError}}</div>
 </div>
-<!--Body of the Page-->
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <a href="#/user/{{model.uid}}" class="pull-right navbar-link">
-        <span class="glyphicon glyphicon-user"></span>
-    </a>
-</nav>
