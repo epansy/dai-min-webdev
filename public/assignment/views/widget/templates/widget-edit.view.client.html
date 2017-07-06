@@ -10,7 +10,7 @@
             Widget Edit
         </a>
         <div class="navbar-text pull-right cl-icon-padding">
-            <a ng-click="model.editWidget()" class="cl-text-black">
+            <a ng-click="model.updateWidget()" class="cl-text-black">
                 <span class="glyphicon glyphicon-ok"></span>
             </a>
         </div>
@@ -18,7 +18,7 @@
 </nav>
 
 <div class="container">
-    <div ng-switch="model.widgetType">
+    <div ng-switch="model.currentWidget.widgetType">
         <div ng-switch-when="HEADING">
             <div ng-include src="'views/widget/templates/heading/widget-header-edit.view.client.html'"></div>
         </div>
@@ -29,7 +29,7 @@
             <div ng-include src="'views/widget/templates/youtube/widget-youtube-edit.view.client.html'"></div>
         </div>
 
-        <a class="margin-top btn btn-danger btn-block" ng-click="model.deleteWidget(model.wgid)">Delete</a>
+        <a class="margin-top btn btn-danger btn-block" ng-click="model.deleteWidget()">Delete</a>
     </div>
 </div>
 

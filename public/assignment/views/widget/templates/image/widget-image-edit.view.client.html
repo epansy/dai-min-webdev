@@ -1,32 +1,29 @@
+<label for="name">Name</label>
+<input id="name"
+       ng-model="model.widgetName"
+       class="form-control"/>
 
-<div class="container">
-    <form>
-        <div class="form-group">
-            <label for="widget-image-name">Name</label>
-            <input ng-model="model.widgetName" type="text" class="form-control" id="widget-image-name"
-                   placeholder="Name">
-        </div>
-        <div class="form-group">
-            <label for="widget-image-text">Text</label>
-            <input ng-model="model.widgetText" type="text" class="form-control" id="widget-image-text"
-                   placeholder="Text">
-        </div>
-        <div class="form-group">
-            <label for="widget-image-url">URL</label>
-            <input ng-model="model.widgetUrl" type="text" class="form-control" id="widget-image-url"
-                   placeholder="http://www.example.com">
-        </div>
-        <div class="form-group">
-            <label for="widget-image-width">Width</label>
-            <input ng-model="model.widgetWidth" type="text" class="form-control" id="widget-image-width"
-                   placeholder="100%">
-        </div>
-        <div class="form-group">
-            <label for="widget-image-file-chooser">Upload</label>
-            <input type="file" id="widget-image-file-chooser">
-            <p class="help-block">Upload the image from your device.</p>
-        </div>
-        <a id="widget-image-upload-btn" class="btn btn-primary btn-block"
-           href="../widget-list.view.client.html">Upload Image</a>
-    </form>
-</div>
+<label for="text">Text</label>
+<input id="text"
+       ng-model="model.widgetText"
+       class="form-control"/>
+
+<label for="width">Width</label>
+<input id="width"
+       ng-model="model.widgetWidth"
+       class="form-control"/>
+
+<label for="url">URL</label>
+<input id="url"
+       ng-model="model.widgetUrl"
+       class="form-control"/>
+
+<label for="file">File Upload</label>
+<input id="file"
+       type="file"
+       multiple
+       class="form-control"/>
+
+<a class="btn btn-primary btn-block">
+    Upload Image
+</a>

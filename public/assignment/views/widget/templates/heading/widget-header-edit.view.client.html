@@ -1,13 +1,20 @@
+<label for="name">Name</label>
+<input id="name"
+       ng-model="model.widgetName"
+       class="form-control"/>
 
-            <label for="widget-heading-name">Name</label>
-            <input ng-model="model.widgetName" type="text" class="form-control" id="widget-heading-name"
-                   placeholder="Name">
+<label for="text">Text</label>
+<input id="text"
+       ng-model="model.widgetText"
+       class="form-control"/>
 
+<label>Size</label>
+<select ng-model="model.widgetSize" class="form-control">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+</select>
 
-            <label for="widget-heading-text">Text</label>
-            <input ng-model="model.widgetText" type="text" class="form-control" id="widget-heading-text"
-                   placeholder="Text">
-
-            <label for="widget-heading-size">Size</label>
-            <input ng-model="model.widgetSize" type="number" class="form-control" id="widget-heading-size"
-                   placeholder="Size">

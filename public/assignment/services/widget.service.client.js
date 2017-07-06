@@ -38,29 +38,71 @@
             return widgets.reduce(getMaxId, 0).toString();
         }
 
-        function createWidget(pageId, widget) {
-            var newWidgetId = getNextId();
-            var newWidget = {
-                _id: newWidgetId,
-                widgetType: widget.widgetType,
+        function createHeader(pageId, widget, widgetId) {
+            var newHeader = {
+                _id: widgetId,
+                widgetType: 'HEADING',
                 pageId: pageId,
                 size: widget.size,
                 text: widget.text,
+                name: widget.name
+
+            }
+            return newHeader;
+        }
+
+        function createImage(pageId, widget, widgetId) {
+            var newImage = {
+                _id: widgetId,
+                widgetType: 'IMAGE',
+                pageId: pageId,
+                name: widget.name,
                 width: widget.width,
                 url: widget.url
             }
-            widgets.push(newWidget);
+            return newImage;
+        }
+
+        function createYouTube(pageId, widget, widgetId) {
+            var newYouTube = {
+                _id: widgetId,
+                widgetType: 'YOUTUBE',
+                pageId: pageId,
+                name: widget.name,
+                width: widget.width,
+                url: widget.url
+            }
+            return newYouTube;
+        }
+
+
+        function createWidget(pageId, widget) {
+            var newWidgetId = getNextId();
+            var newWidget = null;
+            if(widget.widgetType === 'HEADING') {
+                newWidget = createHeader(pageId, widget, newWidgetId);
+            } else if(widget.widgetType === 'IMAGE') {
+                newWidget = createImage(pageId, widget, newWidgetId);
+            } else if(widget.widgetType === 'YOUTUBE') {
+                newWidget = createYouTube(pageId, widget, newWidgetId);
+            }
+
+            if(newWidget !== null) {
+                widgets.push(newWidget);
+            }
+
         }
 
 
         function findWidgetsByPageId(pageId) {
             results = [];
-            function filterByPageId(widget) {
-                return widget.pageId === pageId;
+            for (w in widgets) {
+                var widget = widgets[w];
+                if (parseInt(widget.pageId) === parseInt(pageId)) {
+                    result.push(widget);
+                }
             }
-
-            results = widgets.filter(filterByPageId);
-            return results;
+            return result;
         }
 
         function findWidgetById(widgetId) {
@@ -76,14 +118,22 @@
         function updateWidget(widgetId, widget) {
             var oldWidget = findWidgetById(widgetId);
             var index = widgets.indexOf(oldWidget);
-            if (oldWidget.widgetType != widget.widgetType) {
-                return;
+            var type = oldWidget.widgetType;
+            if(type === 'HEADING') {
+                widgets[index].name = widget.name;
+                widgets[index].text = widget.text;
+                widgets[index].size = widget.size;
+            } else if(type === 'IMAGE') {
+                widgets[index].name = widget.name;
+                widgets[index].text = widget.text;
+                widgets[index].url = widget.url;
+                widgets[index].width = widget.width;
+            } else if(type === 'YOUTUBE') {
+                widgets[index].name = widget.name;
+                widgets[index].text = widget.text;
+                widgets[index].url = widget.url;
+                widgets[index].width = widget.width;
             }
-            widgets[index].widgetType = widget.widgetType;
-            widgets[index].size = widget.size;
-            widgets[index].text = widget.text;
-            widgets[index].width = widget.width;
-            widgets[index].url = widget.url;
         }
 
         function deleteWidget(widgetId) {
