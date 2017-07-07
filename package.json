@@ -3,16 +3,36 @@
   "version": "1.0.0",
   "description": "Web Dev at Northeastern University",
   "main": "server.js",
-  "dependencies": {
-    "body-parser": "^1.15.1",
-    "express": "^4.13.4",
-    "mongoose": "^4.4.15"
-  },
-  "devDependencies": {},
+
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "Jose G. Annunziato",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epansy/dai-min-webdev.git"
+  },
+  "keywords": [
+    "web",
+    "dev",
+    "angular"
+  ],
+  "bugs": {
+    "url": "https://github.com/epansy/dai-min-webdev/issues"
+  },
+  "homepage": "https://github.com/epansy/dai-min-webdev#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "bootstrap": "^3.3.7",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.3",
+    "express-session": "^1.15.2",
+    "jquery": "^3.2.1",
+    "mongoose": "^4.9.8",
+    "mule": "^0.1.0",
+    "multer": "^1.3.0"
+  },
+  "devDependencies": {},
+  "author": "Min Dai",
   "license": "ISC"
 }

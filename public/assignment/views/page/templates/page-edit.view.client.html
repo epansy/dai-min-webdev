@@ -9,7 +9,7 @@
             </a>
         </div>
         <div class="navbar-text pull-right">
-            <a href="#!/user/{{model.uid}}/website/{{model.wid}}/page" class="cl-icon-padding cl-text-black">
+            <a ng-click="model.updatePage(model.page)" class="cl-icon-padding cl-text-black">
           <span class="glyphicon glyphicon-ok">
           </span>
             </a>
@@ -38,7 +38,7 @@
            id="pageTitle"
            required>
 
-    <a class="btn btn-danger btn-block" ng-click="model.deletePage(model.pid)">
+    <a class="btn btn-danger btn-block" ng-click="model.deletePage(model.page)">
         Delete
     </a>
 </div>

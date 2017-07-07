@@ -20,7 +20,7 @@
                 <a class="cl-text-white navbar-brand cl-text-bold" href="#">
                     Edit Websites
                 </a>
-                <a ng-click="model.updateWebsite()" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+                <a ng-click="model.updateWebsite(model.website)" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
             </div>
@@ -65,7 +65,7 @@
         </form>
 
         <a class="btn btn-danger btn-block"
-           ng-click="model.deleteWebsite(model.wid)">Delete</a>
+           ng-click="model.deleteWebsite(model.website)">Delete</a>
     </div>
 </div>
 

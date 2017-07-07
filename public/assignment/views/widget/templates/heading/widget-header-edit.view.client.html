@@ -1,15 +1,18 @@
 <label for="name">Name</label>
-<input id="name"
-       ng-model="model.widgetName"
-       class="form-control"/>
-
+<input ng-model="model.widget.text"
+       type="text"
+       class="form-control"
+       placeholder="Header Name"
+       id="name"
+       required>
 <label for="text">Text</label>
-<input id="text"
-       ng-model="model.widgetText"
-       class="form-control"/>
-
+<input ng-model="model.widget.text"
+       type="text"
+       class="form-control"
+       placeholder="Header Text"
+       id="text">
 <label>Size</label>
-<select ng-model="model.widgetSize" class="form-control">
+<select ng-model="model.widget.size" class="form-control">
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>

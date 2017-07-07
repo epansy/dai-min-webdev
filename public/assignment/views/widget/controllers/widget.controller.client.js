@@ -11,7 +11,13 @@
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
-        vm.widgets = WidgetService.findWidgetsByPageId(vm.pid);
+        WidgetService
+            .findWidgetsByPageId(vm.pid)
+            .then(renderWidgets);
+
+        function renderWidgets(widgets) {
+            vm.widgets = widgets;
+        }
 
         vm.trustThisContent = trustThisContent;
         vm.getYoutubeEmbedUrl = getYoutubeEmbedUrl;
@@ -47,74 +53,78 @@
         vm.createError = null;
 
 
-        function createWidget() {
+        function createWidget(size, width, text, url) {
             if (vm.widgetType === 'IMAGE' || vm.widgetType === 'YOUTUBE') {
-                if (vm.widgetUrl === null || vm.widgetUrl === undefined) {
+                if (url === null || url === undefined) {
                     vm.error = "Url is required for Image/Youtube";
                     return;
                 }
             }
             if (vm.widgetType === 'HEADING') {
-                if (vm.widgetText === null || vm.widgetText === undefined) {
+                if (text === null || text === undefined) {
                     vm.error = "Text is required for Header";
                     return;
                 }
             }
             var newWidget = {
-                name: vm.widgetName,
-                text: vm.widgetText,
+                name: vm.widget.name,
                 widgetType: vm.widgetType,
-                size: vm.widgetSize,
-                width: vm.widgetWidth,
-                url: vm.widgetUrl
+                size: size,
+                width: width,
+                text: text,
+                url: url
             };
-            WidgetService.createWidget(vm.pid, newWidget);
-            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+            WidgetService
+                .createWidget(vm.pid, newWidget)
+                .then(function () {
+                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                });
         }
     }
 
-    function EditWidgetController($routeParams, $location, WidgetService) {
+    function EditWidgetController($routeParams, $location, WidgetService, $timeout) {
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
         vm.wgid = $routeParams.wgid;
-        vm.currentWidget = WidgetService.findWidgetById(vm.wgid);
+        WidgetService
+            .findWidgetById(vm.wgid)
+            .then(function (widget) {
+                vm.widget = widget;
+            }, function (error) {
+                vm.error = "Cannot find this widget by id";
+                $timeout(function () {
+                    vm.error = null;
+                }, 3000);
+            });
         vm.updatewidget = updateWidget;
         vm.deleteWidget = deleteWidget;
 
-        if (vm.currentWidget.widgetType === "HEADING") {
-            vm.widgetName = vm.currentWidget.name;
-            vm.widgetText = vm.currentWidget.text;
-            vm.widgetSize = vm.currentWidget.size;
-        } else if (vm.currentWidget.widgetType === "IMAGE") {
-            vm.widgetName = vm.currentWidget.name;
-            vm.widgetText = vm.currentWidget.text;
-            vm.widgetUrl = vm.currentWidget.url;
-            vm.widgetWidth = vm.currentWidget.width;
-        } else if (vm.currentWidget.widgetType === "YOUTUBE") {
-            vm.widgetName = vm.currentWidget.name;
-            vm.widgetText = vm.currentWidget.text;
-            vm.widgetUrl = vm.currentWidget.url;
-            vm.widgetWidth = vm.currentWidget.width;
+        function updateWidget(newWidget) {
+            WidgetService
+                .updateWidget(vm.wgid, newWidget)
+                .then(function () {
+                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                }, function (error) {
+                    vm.error = "Cannot find widget to update.";
+                    $timeout(function () {
+                        vm.error = null;
+                    }, 3000);
+                });
         }
 
-        function updateWidget() {
-            var latestData = {
-                name: vm.widgetName,
-                text: vm.widgetText,
-                widgetType: vm.currentWidget.widgetType,
-                size: vm.widgetSize,
-                width: vm.widgetWidth,
-                url: vm.widgetUrl
-            };
-            WidgetService.updateWidget(vm.wgid, latestData);
-            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
-        }
-
-        function deleteWidget() {
-            WidgetService.deleteWidget(vm.wgid);
-            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+        function deleteWidget(widget) {
+            WidgetService
+                .deleteWidget(widget._id)
+                .then(function () {
+                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                }, function (error) {
+                    vm.error = "Cannot find widget to delete.";
+                    $timeout(function () {
+                        vm.error = null;
+                    }, 3000);
+                })
         }
 
     }

@@ -10,11 +10,17 @@
         vm.login = login;
 
         function login(username, password) {
-            var user = UserService.findUserByCredentials(username, password);
-            if (user === null) {
-                vm.error = "Username does not exist.";
-            } else {
-                $location.url("/user/" + user._id);
+            UserService
+                .findUserByCredentials(username, password)
+                .then(login);
+
+            function login(user) {
+                console.log(user);
+                if (user === null) {
+                    vm.error = "Username does not exist.";
+                } else {
+                    $location.url("/user/" + user._id);
+                }
             }
         }
     }
@@ -32,50 +38,71 @@
                 vm.error = "Password does not match.";
                 return;
             }
-            var user = UserService.findUserByUsername(username);
-            if (user === null) {
-                user = {
-                    username: username,
-                    password: password,
-                    firstName: "",
-                    lastName: "",
-                    email: ""
-                };
-                UserService.createUser(user);
-                user = UserService.findUserByUsername(username);
-                $location.url("/user/" + user._id);
-            }
-            else {
-                vm.error = "Username already exists.";
-                $timeout(function () {
-                    vm.error = null;
-                }, 3000);
-            }
+            UserService
+                .findUserByUsername(username)
+                .then(
+                    function () {
+                        vm.error = "Username already exists.";
+                    },
+                    function () {
+                        var user = {
+                            username: username,
+                            password: password,
+                            firstName: "",
+                            lastName: "",
+                            email: ""
+                        };
+                        return UserService
+                            .createUser(user)
+                    })
+                .then(
+                    function (user) {
+                        $location.url("/user/" + user._id);
+                    });
         }
     }
 
-    function ProfileController($routeParams, $timeout, UserService) {
+    function ProfileController($routeParams, $timeout, $location, UserService) {
         var vm = this;
-        vm.user = UserService.findUserById($routeParams.uid);
-        vm.username = vm.user.username;
-        vm.firstName = vm.user.firstName;
-        vm.lastName = vm.user.lastName;
-        vm.email = vm.user.email;
+        vm.uid = $routeParams.uid;
+
         vm.updateUser = updateUser;
+        vm.deleteUser = deleteUser;
 
-        function updateUser() {
-            var update_user = {
-                _id: $routeParams.uid,
-                firstName: vm.firstName,
-                lastName: vm.lastName,
-                email: vm.email
-            };
-            UserService.updateUser($routeParams.uid, update_user);
-            vm.updated = "Profile changes saved!";
+        UserService.findUserById(vm.uid)
+            .then(renderUser, userError);
 
-            $timeout(function () {
-                vm.updated = null;
-            }, 3000);
+        function deleteUser(user) {
+            UserService
+                .deleteUser(user._id)
+                .then(function () {
+                    $location.url('/login');
+                }, function () {
+                    vm.error = "Unable to remove this user.";
+                    $timeout(function () {
+                        vm.error = null;
+                    }, 3000);
+                });
+        }
+
+        function updateUser(user) {
+            UserService
+                .updateUser(user._id, user)
+                .then(function () {
+                    vm.updated = "Profile changes saved!";
+                    $timeout(function () {
+                        vm.updated = null;
+                    }, 3000);
+                });
+        }
+
+
+        function renderUser(user) {
+            vm.user = user;
+        }
+
+        function userError(error) {
+            vm.error = "User not found";
         }
     }
 })();

@@ -9,7 +9,13 @@
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
-        vm.pages = PageService.findPageByWebsiteId(vm.wid);
+        PageService
+            .findPageByWebsiteId(vm.wid)
+            .then(renderPages);
+
+        function renderPages(pages) {
+            vm.pages = pages;
+        }
     }
 
     function NewPageController($routeParams, $timeout, $location, PageService) {
@@ -32,8 +38,11 @@
                 name: pageName,
                 description: pageTitle
             };
-            PageService.createPage(vm.wid, page);
-            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+            PageService
+                .createPage(vm.wid, page)
+                .then(function () {
+                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+                });
         }
     }
 
@@ -47,25 +56,40 @@
         vm.deletePage = deletePage;
 
         function init() {
-            vm.page = PageService.findPageById(vm.pid);
+            PageService
+                .findPageById(vm.pid)
+                .then(function (page) {
+                    vm.page = page;
+                }, function (error) {
+                    vm.error = "Cannot find that page by ID";
+                    $timeout(function () {
+                        vm.error = null;
+                    }, 3000);
+                });
         }
         init();
 
-        function updatePage() {
-            var update_page = {
-                _id: vm.pid,
-                name: vm.page.name,
-                websiteId: vm.wid,
-                description: vm.page.des
-            };
-
-            PageService.updatePage(vm.pid, update_page);
-            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+        function updatePage(newPage) {
+            PageService
+                .updatePage(vm.pid, newPage)
+                .then(function () {
+                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+                });
         }
 
-        function deletePage(pageId) {
-            PageService.deletePage(pageId);
-            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+        function deletePage(page) {
+            PageService.deletePage(page._id)
+                .then(
+                    function () {
+                        $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+                    },
+                    function() {
+                        vm.error = "Cannot delete this page";
+                        $timeout(function () {
+                            vm.error = null;
+                        }, 3000);
+                    });
+
         }
     }
 })();
