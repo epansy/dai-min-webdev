@@ -101,7 +101,7 @@ module.exports = function(app){
                 return;
             }
         }
-        res.Status(404).send("Cannot find widget to update");
+        res.status(404).send("Cannot find widget to update");
     }
 
     function deleteWidget(req, res) {

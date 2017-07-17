@@ -23,7 +23,6 @@ module.exports = function(app){
     app.delete('/api/website/:wid',deleteWebsite);
 
 
-    /*API calls implementation*/
     function createWebsite(req, res) {
         var uid = req.params.uid;
         var website = req.body;
@@ -70,8 +69,6 @@ module.exports = function(app){
 
         for (w in websites) {
             if (String(websites[w]._id) === String(wid)) {
-                // websites[w].name=website.name;
-                // websites[w].desc=website.desc;
                 websites[w] = website;
                 res.sendStatus(200);
                 return;

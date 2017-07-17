@@ -22,8 +22,8 @@
 </nav>
 
 
-<div class="container cl-container-padding">
-    <div ng-repeat="widget in model.widgets">
+<div wbdv-sortable="model.pid" class="container cl-container-padding">
+    <div ng-repeat="widget in model.widgets" class="margin-bottom">
             <div class="widget-toolbar">
                 <a href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{widget._id}}">
                     <span class="glyphicon glyphicon-cog"></span>

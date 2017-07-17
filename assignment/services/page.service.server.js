@@ -18,6 +18,7 @@ module.exports = function(app){
 
     //DELETE calls
     app.delete("/api/page/:pid", deletePage);
+    app.delete("/api/website/:websiteId/page", deletePagesByWebsiteId);
 
     //API calls implementation
     function createPage(req, res) {
@@ -83,5 +84,15 @@ module.exports = function(app){
             }
         }
         res.sendStatus(404);
+    }
+
+    function deletePagesByWebsiteId(req, res) {
+        var websiteId = req.params.wid;
+        for (p in pages) {
+            if (pages[p].wid === websiteId) {
+                pages.splice(p, 1);
+                res.sendStatus(200);
+            }
+        }
     }
 };
