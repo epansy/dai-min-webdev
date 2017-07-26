@@ -12,7 +12,7 @@ module.exports = function() {
 
     var mongoose = require('mongoose');
     mongoose.connect(connectionString);
-    //mongoose.Promise = require('q').Promise;
+    mongoose.Promise = require('q').Promise;
 
     var db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
