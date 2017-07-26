@@ -6,10 +6,14 @@
     function wbdvSortable($http) {
 
         function linkFunction(scope, element, attrs) {
-            // get the pageId of the widgets list
+
             var fullUrl = window.location.href;
             var fullUrlParts = fullUrl.split("/");
             var pageId = fullUrlParts[fullUrlParts.indexOf("page") + 1];
+
+            var start = -1;
+            var end = -1;
+
             $(element).sortable({
                 start: function (event, ui) {
                     start = $(ui.item).index();
@@ -22,9 +26,9 @@
                         end: end
                     };
                     console.log("end:"+end);
-                    // get the url to send to server
-                    var url = "/api/page/" + pageId + "/widget?initial=" + start + "&final=" + end;
-                    // change the widgets order in server
+
+                    var url = "/api/page/" + pageId + "/widget?start=" + start + "&end=" + end;
+
                     $http.put(url);
 
                 }

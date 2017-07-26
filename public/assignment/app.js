@@ -1,4 +1,4 @@
 (function(){
-    angular.module("WebAppMaker", ["ngRoute", "WbdvDirective"]);
+    angular.module("WebAppMaker", ["ngRoute", "WbdvDirective", "textAngular"]);
 })();
 

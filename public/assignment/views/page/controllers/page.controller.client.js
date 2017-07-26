@@ -61,7 +61,7 @@
                 .then(function (page) {
                     vm.page = page;
                 }, function (error) {
-                    vm.error = "Cannot find that page by ID";
+                    vm.error = "Cannot find page";
                     $timeout(function () {
                         vm.error = null;
                     }, 3000);

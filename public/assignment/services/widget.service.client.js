@@ -1,18 +1,14 @@
-/**
- * Created by RT on 11/10/16.
- */
-(function () {
+(function() {
     angular
         .module("WebAppMaker")
         .factory("WidgetService", WidgetService);
-
     function WidgetService($http) {
         var service = {
-            "createWidget": createWidget,
-            "findWidgetsByPageId": findWidgetsByPageId,
-            "findWidgetById": findWidgetById,
-            "updateWidget": updateWidget,
-            "deleteWidget": deleteWidget,
+            "createWidget" : createWidget,
+            "findWidgetsByPageId" : findWidgetsByPageId,
+            "findWidgetById" : findWidgetById,
+            "updateWidget" : updateWidget,
+            "deleteWidget" : deleteWidget
         };
         return service;
 
@@ -26,7 +22,6 @@
 
         function findWidgetsByPageId(pageId) {
             var url = "/api/page/" + pageId + "/widget";
-
             return $http.get(url)
                 .then(function (response) {
                     return response.data;
