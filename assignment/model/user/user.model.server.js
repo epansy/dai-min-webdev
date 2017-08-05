@@ -11,35 +11,16 @@ module.exports = function(mongoose){
         'removeWebsiteFromUser' : removeWebsiteFromUser,
         'addWebsiteForUser' : addWebsiteForUser,
         'deleteUser' : deleteUser,
-        'findAllUser' : findAllUser
+        'findAllUser' : findAllUser,
+        'findUserByGoogleId' : findUserByGoogleId
     };
 
     return api;
 
-    // Function Definition Section
-
-
-
     function createUser(user){
-        var newUser = {
-            username : user.username,
-            password : user.password,
-            websites : []
-        };
-
-        if(user.firstName){
-            newUser.firstName = user.firstName;
-        }
-        if(user.lastName){
-            newUser.lastName = user.lastName;
-        }
-        if(user.email){
-            newUser.email = user.email;
-        }
-        if(user.phone){
-            newUser.phone = user.phone;
-        }
-        return userModel.create(newUser);
+        user.roles = ['USER'];
+        user.websites = [];
+        return userModel.create(user);
     }
 
     function findUserById(userId){
@@ -73,8 +54,9 @@ module.exports = function(mongoose){
             .findOne({_id: userId})
             .then(
                 function(user){
-                    user.websites.pull(websiteId);
-                    user.save();
+                    var index = user.websites.indexOf(websiteId);
+                    user.websites.splice(index, 1);
+                    return user.save();
                 },
                 function(error){
                     console.log(error);
@@ -83,7 +65,6 @@ module.exports = function(mongoose){
     }
 
     function addWebsiteForUser(userId, websiteId) {
-        console.log("in add website for user");
         return userModel
             .findOne({_id: userId})
             .then(function (user) {
@@ -100,5 +81,10 @@ module.exports = function(mongoose){
 
     function findAllUser() {
         return userModel.find();
+    }
+
+
+    function findUserByGoogleId(googleId) {
+        return userModel.findOne({'google.id' : googleId});
     }
 };

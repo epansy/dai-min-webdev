@@ -6,9 +6,9 @@
         .controller("CreateWidgetController", CreateWidgetController)
         .controller("EditWidgetController", EditWidgetController);
 
-    function WidgetListController($routeParams, $sce, WidgetService) {
+    function WidgetListController($routeParams, $sce, WidgetService, loggedin) {
         var vm = this;
-        vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
         WidgetService
@@ -35,17 +35,17 @@
         }
     }
 
-    function NewWidgetController($routeParams, $timeout, WidgetService) {
+    function NewWidgetController($routeParams, $timeout, WidgetService, loggedin) {
         var vm = this;
-        vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
         vm.widgets = WidgetService.findWidgetsByPageId(vm.pid);
     }
 
-    function CreateWidgetController($routeParams, $location, WidgetService, $timeout) {
+    function CreateWidgetController($routeParams, $location, WidgetService, $timeout, loggedin) {
         var vm = this;
-        vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
         vm.wtype = $routeParams.wtype;
@@ -98,9 +98,9 @@
         }
     }
 
-    function EditWidgetController($routeParams, $location, WidgetService, $timeout) {
+    function EditWidgetController($routeParams, $location, WidgetService, $timeout, loggedin) {
         var vm = this;
-        vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
         vm.wgid = $routeParams.wgid;
@@ -145,9 +145,9 @@
 
     }
 
-    function FlickrImageSearchController($routeParams, $location, FlickrService, WidgetService) {
+    function FlickrImageSearchController($routeParams, $location, FlickrService, WidgetService, loggedin) {
         var vm = this;
-        vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
         vm.wgid = $routeParams.wgid;
@@ -177,13 +177,13 @@
                 WidgetService
                     .createWidget(vm.pid, newWidget)
                     .then(function () {
-                        $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                        $location.url("/website/" + vm.wid + "/page/" + vm.pid + "/widget");
                     })
             } else {
                 WidgetService
                     .updateWidget(vm.wgid, newWidget)
                     .then(function () {
-                        $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                        $location.url("/website/" + vm.wid + "/page/" + vm.pid + "/widget");
                     })
             }
         }

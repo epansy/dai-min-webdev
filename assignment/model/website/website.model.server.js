@@ -16,7 +16,6 @@ module.exports = function(mongoose, userModel) {
     return api;
 
     function createWebsiteForUser(userId, website) {
-        console.log(website);
         website._user = userId;
         return websiteModel
             .create(website)
@@ -52,7 +51,8 @@ module.exports = function(mongoose, userModel) {
             .findOne({_id: websiteId})
             .then(
                 function(website){
-                    website.pages.pull(pageId);
+                    var index = website.pages.indexOf(pageId);
+                    website.pages.splice(index, 1);
                     website.save();
                 },
                 function(error){
@@ -71,10 +71,14 @@ module.exports = function(mongoose, userModel) {
     }
 
     function deleteWebsite(websiteId) {
-        var userId = websiteModel.findOne({_id: websiteId})._user;
-
         return websiteModel
             .remove({_id: websiteId})
+            .then(
+                function (status) {
+                    return userModel
+                        .removeWebsiteFromUser(userId, websiteId);
+                }
+            );
     }
 
     function findAllWebsites() {
