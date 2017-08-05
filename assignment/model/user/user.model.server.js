@@ -10,7 +10,8 @@ module.exports = function(mongoose){
         'updateUser' : updateUser,
         'removeWebsiteFromUser' : removeWebsiteFromUser,
         'addWebsiteForUser' : addWebsiteForUser,
-        'deleteUser' : deleteUser
+        'deleteUser' : deleteUser,
+        'findAllUser' : findAllUser
     };
 
     return api;
@@ -38,48 +39,42 @@ module.exports = function(mongoose){
         if(user.phone){
             newUser.phone = user.phone;
         }
-
-        return userModel.create(user);
-    }
-
-    function findAllUsers() {
-        return userModel.find();
+        return userModel.create(newUser);
     }
 
     function findUserById(userId){
-        return userModel.findById(userId);
+        return userModel.findOne({_id: userId});
     }
 
     function findUserByUsername(uname){
         return userModel.findOne({username : uname})
     }
 
-
-    function findUserByCredentials(username, password){
+    function findUserByCredentials(uname, pswrd){
         return userModel.findOne({
-            username : username,
-            password : password
+            username : uname,
+            password : pswrd
         });
     }
 
     function updateUser(userId, user){
-        delete user.username;
-        delete user.password;
         return userModel.update({
             _id : userId
-        }, {$set: user});
+        }, {
+            firstName : user.firstName,
+            lastName : user.lastName,
+            email : user.email,
+            phone : user.phone
+        });
     }
 
     function removeWebsiteFromUser(userId, websiteId){
-         userModel
-            .findById(userId)
+        userModel
+            .findOne({_id: userId})
             .then(
                 function(user){
-                    var index = user.websites.indexOf(websiteId);
-                    user.websites.splice(index, 1);
-                    return user.save();
-                    // user.websites.pull(websiteId);
-                    // user.save();
+                    user.websites.pull(websiteId);
+                    user.save();
                 },
                 function(error){
                     console.log(error);
@@ -88,6 +83,7 @@ module.exports = function(mongoose){
     }
 
     function addWebsiteForUser(userId, websiteId) {
+        console.log("in add website for user");
         return userModel
             .findOne({_id: userId})
             .then(function (user) {
@@ -100,5 +96,9 @@ module.exports = function(mongoose){
         return userModel.remove({
             _id : userId
         });
+    }
+
+    function findAllUser() {
+        return userModel.find();
     }
 };

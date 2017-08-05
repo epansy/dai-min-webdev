@@ -9,6 +9,7 @@ module.exports = function(app, models){
     app.post('/api/user', createUser);
 
     // GET Calls.
+    app.get('/api/user?username=username', findUserByUsername);
     app.get('/api/user?username=username&password=password', findUserByCredentials);
     app.get('/api/user/:uid', findUserById);
 
@@ -25,32 +26,46 @@ module.exports = function(app, models){
         if(username && password) {
             userModel
                 .findUserByCredentials(username, password)
-                .then(function (user) {
-                    if(user) {
-                        res.json(user);
-                    } else {
-                        res.status(404).send("Login credentials not found")
+                .then(
+                    function (user) {
+                        if(user) {
+                            res.json(user);
+                        } else {
+                            res.status(404).send("Login credentials not found")
+                        }
+                    },
+                    function (error) {
+                        res.sendStatus(404).send(error);
                     }
-                });
+                );
         } else if (username) {
 
             userModel
                 .findUserByUsername(username)
-                .then(function (user) {
-                    if(user) {
-                        res.json(user);
-                    } else {
-                        res.status(404).send("Username not found");
+                .then(
+                    function (user) {
+                        if(user) {
+                            res.json(user);
+                        } else {
+                            res.status(404).send("Username not found");
+                        }
+                    },
+                    function (error) {
+                        res.sendStatus(404).send(error);
                     }
-
-                });
+                    );
 
         } else {
             userModel
                 .findAllUsers()
-                .then(function (users) {
-                    res.json(users);
-                });
+                .then(
+                    function (users) {
+                        res.json(users);
+                    },
+                    function (error) {
+                        res.sendStatus(404).send(error);
+                    }
+                    );
         }
     }
 
@@ -60,11 +75,14 @@ module.exports = function(app, models){
 
         userModel
             .createUser(user)
-            .then(function (user) {
-                res.json(user);
-            }, function (error) {
-                res.send(error);
-            });
+            .then(
+                function (newUser) {
+                    res.json(newUser);
+                },
+                function (error) {
+                    res.sendStatus(404).send(error);
+                }
+            );
 
     }
 
@@ -77,16 +95,35 @@ module.exports = function(app, models){
         if(username && password) {
             userModel
                 .findUserByCredentials(username, password)
-                .then(function (user) {
-                    if (user) {
-                        res.json(user);
-                    } else {
-                        res.status(404).send("Login credentials not found");
+                .then(
+                    function (user) {
+                        if (user) {
+                            res.json(user);
+                        } else {
+                            res.status(404).send("Login credentials not found");
+                        }
+                    },
+                    function (error) {
+                        res.sendStatus(404).send(error);
                     }
-                });
+                );
         } else {
             res.status(404).send("Login credentials not found");
         }
+    }
+
+    function findUserByUsername (req, res) {
+
+        var username = req.query.username;
+
+        for (u in users){
+            var user = users[u];
+            if(user.username === username){
+                res.status(200).send(user);
+                return;
+            }
+        }
+        res.status(404).send("Not found that user with this username!");
     }
 
     function findUserById(req, res) {
@@ -114,18 +151,32 @@ module.exports = function(app, models){
         var user = req.body;
         userModel
             .updateUser(uid, user)
-            .then(function (status) {
-                res.send(status);
-            });
+            .then(
+                function (user){
+                    res.json(user)
+                },
+                function (error){
+                    res.sendStatus(400).send(error);
+                }
+            );
     }
 
     function deleteUser(req,res) {
         var uid = req.params.uid;
 
-        userModel
-            .deleteUser(uid)
-            .then(function (status) {
-                res.send(status);
-            });
+        if(uid){
+            userModel
+                .deleteUser(uid)
+                .then(
+                    function (status){
+                        res.sendStatus(200);
+                    },
+                    function (error){
+                        res.sendStatus(400).send(error);
+                    }
+                );
+        } else{
+            res.sendStatus(412);
+        }
     }
 };

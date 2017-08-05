@@ -12,11 +12,15 @@
     </div>
 </nav>
 
-<div class="container">
-    <ul class="list-group cl-list-group-borderless">
+<div class="container-fluid">
+    <ul class="list-group borderless">
         <li ng-repeat="website in model.websites" class="list-group-item cl-list-item-borderless">
-            <a href="#!/user/{{website.developerId}}/website/{{website._id}}"><span class="glyphicon glyphicon-cog pull-right"></span></a>
-            <a href="#!/user/{{website.developerId}}/website/{{website._id}}/page">{{website.name}}</a>
+            <a href="#!/user/{{website._user._id}}/website/{{website._id}}">
+                <span class="glyphicon glyphicon-cog pull-right"></span>
+            </a>
+            <a href="#!/user/{{website._user._id}}/website/{{website._id}}/page">
+                {{website.name}}
+            </a>
         </li>
     </ul>
 </div>

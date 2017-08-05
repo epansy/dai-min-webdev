@@ -53,7 +53,7 @@
         vm.createError = null;
 
 
-        function createWidget(size, width, text, url) {
+        function createWidget(name, size, width, text, url) {
             if (vm.wtype === "HEADING") {
                 if (size === undefined || text === undefined || size === null || text === null) {
                     vm.error = "Heading name and size cannot be empty";
@@ -84,6 +84,7 @@
 
             var newWidget = {
                 widgetType: vm.wtype,
+                name: name,
                 size: size,
                 width: width,
                 text: text,
@@ -140,6 +141,51 @@
                         vm.error = null;
                     }, 3000);
                 })
+        }
+
+    }
+
+    function FlickrImageSearchController($routeParams, $location, FlickrService, WidgetService) {
+        var vm = this;
+        vm.uid = $routeParams.uid;
+        vm.wid = $routeParams.wid;
+        vm.pid = $routeParams.pid;
+        vm.wgid = $routeParams.wgid;
+
+        vm.selectPhoto = selectPhoto;
+        vm.searchPhotos = function(searchTerm) {
+            FlickrService
+                .searchPhotos(searchTerm)
+                .then(function(response) {
+                    data = response.data.replace("jsonFlickrApi(","");
+                    data = data.substring(0,data.length - 1);
+                    data = JSON.parse(data);
+                    vm.photos = data.photos;
+                });
+        };
+
+        function selectPhoto(photo) {
+            var url = "https://farm" + photo.farm + ".staticflickr.com/" + photo.server;
+            url += "/" + photo.id + "_" + photo.secret + "_b.jpg";
+
+            var newWidget = {
+                widgetType: "IMAGE",
+                url: url
+            };
+
+            if (vm.wgid === null || vm.wgid === undefined) {
+                WidgetService
+                    .createWidget(vm.pid, newWidget)
+                    .then(function () {
+                        $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                    })
+            } else {
+                WidgetService
+                    .updateWidget(vm.wgid, newWidget)
+                    .then(function () {
+                        $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                    })
+            }
         }
 
     }

@@ -45,7 +45,9 @@ module.exports = function(mongoose, websiteModel){
         });
     }
 
-    function deletePage(websiteId, pageId) {
+    function deletePage(pageId) {
+        var websiteId = pageModel.findOne({_id: pageId})._website;
+
         return pageModel
             .remove({_id: pageId})
             .then(function (status) {
@@ -68,7 +70,7 @@ module.exports = function(mongoose, websiteModel){
 
     function addWidgetToPage(pageId, widgetId) {
         return pageModel
-            .findById({_id: pageId})
+            .findOne({_id: pageId})
             .then(function (page) {
                 page.widgets.push(widgetId);
                 return page.save();
