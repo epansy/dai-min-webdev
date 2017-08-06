@@ -79,9 +79,6 @@
                     $location.url('/login');
                 }, function () {
                     vm.error = "Unable to remove this user.";
-                    $timeout(function () {
-                        vm.error = null;
-                    }, 3000);
                 });
         }
 

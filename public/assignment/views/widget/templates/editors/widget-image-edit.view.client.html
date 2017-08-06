@@ -1,0 +1,32 @@
+<label for="name">Name</label>
+<input type="text" class="form-control" placeholder="Image Name" id="name">
+<label for="text">Text</label>
+<input type="text" class="form-control" placeholder="Image Text" id="text">
+<label for="url">URL</label>
+<input ng-model="model.widget.url"
+       type="text"
+       class="form-control"
+       placeholder="Image URL"
+       id="url">
+<label for="width">Width</label>
+<input ng-model="model.widget.width"
+       type="text"
+       class="form-control"
+       placeholder="Image Width"
+       id="width"
+       required>
+
+<a class="btn btn-info btn-block"
+   href="#!/website/{{model.wid}}/page/{{model.pid}}/widget/search/">
+    Search
+</a>
+
+<form action="/api/upload"   method="post" enctype="multipart/form-data">
+    <input  name="myFile"    type="file" class="form-control"/>
+    <input  name="width"     value="{{model.widget.width}}" style="display: none"/>
+    <input  name="userId"    value="{{model.uid}}"   style="display: none"/>
+    <input  name="websiteId" value="{{model.wid}}"   style="display: none"/>
+    <input  name="pageId"    value="{{model.pid}}"   style="display: none"/>
+    <input  name="widgetId"  value="{{model.widget._id}}"   style="display: none"/>
+    <button type="submit"    class="btn btn-block btn-primary">Upload Image</button>
+</form>

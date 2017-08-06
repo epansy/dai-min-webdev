@@ -189,8 +189,8 @@ module.exports = function(app, models){
         userModel
             .findUserByUsername(username)
             .then(
-                function (users) {
-                    res.json(users);
+                function (user) {
+                    res.json(user);
                 },
                 function (error) {
                     res.sendStatus(404).send(error);
