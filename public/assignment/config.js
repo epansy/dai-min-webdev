@@ -172,7 +172,6 @@
         $http
             .get('/api/loggedin')
             .then(function(response) {
-                // console.log(user.data);
                 var user = response.data;
                 if (user !== '0') {
                     if (user.roles.indexOf('ADMIN') > -1) {

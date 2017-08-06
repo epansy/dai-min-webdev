@@ -5,7 +5,7 @@
 
     function UserService($http) {
         var services = {
-            // "createUser": createUser,
+            "createUser": createUser,
             "findUserById": findUserById,
             "findUserByUsername": findUserByUsername,
             "findUserByCredentials": findUserByCredentials,
@@ -19,6 +19,13 @@
         };
         return services;
 
+        function createUser(user) {
+            var url = "/api/user/";
+            return $http.post(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
 
         function login(username, password) {
             var url = "/api/login";
@@ -33,7 +40,7 @@
         }
 
         function logout() {
-            var url = "api/logout";
+            var url = "/api/logout";
             return $http.post(url)
                 .then(function (response) {
                     return response.data;
@@ -41,7 +48,7 @@
         }
 
         function register(user) {
-            var url = "api/register";
+            var url = "/api/register";
             return $http.post(url, user)
                 .then(function (response) {
                     return response.data;

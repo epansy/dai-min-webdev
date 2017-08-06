@@ -42,9 +42,6 @@
                     function (user) {
                         if (user !== null) {
                             vm.error = "Username already exists.";
-                            $timeout(function () {
-                                vm.error = null;
-                            }, 3000);
                             return;
                         } else {
                             var user = {
@@ -54,7 +51,6 @@
                                 lastName: "",
                                 email: ""
                             };
-                            // return the promise
                             return UserService
                                 .register(user);
                         }

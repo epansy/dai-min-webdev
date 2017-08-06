@@ -37,22 +37,18 @@ module.exports = function(app, models){
     // google oauth
 
     var googleConfig = {
-        clientID: process.env.GOOGLE_CLIENT_ID || '438711763187-m8tbst1rpdbpo2k2vkfnp4g57kei4qlm.apps.googleusercontent.com',
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET || '9GS_5yXBRMjnhqIvtHegzabA',
-        callbackURL: process.env.GOOGLE_CALLBACK_URL || 'http://localhost:5000/auth/google/callback'
+        clientID: process.env.GOOGLE_CLIENT_ID || '256535048425-c93g8c8umo1jn7jqbhusft4fquk8dl7k.apps.googleusercontent.com',
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'qS9v2wQQpP9wrsbkqbjwDA5i',
+        callbackURL: process.env.GOOGLE_CALLBACK_URL || 'http://localhost:3000/auth/google/callback'
     };
 
     passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 
     function googleStrategy(token, refreshToken, profile, done) {
-
-        // console.log("profile: " + profile);
-
         userModel
             .findUserByGoogleId(profile.id)
             .then(
                 function(user) {
-                    // console.log("user: " + user);
                     if(user) {
                         return done(null, user);
                     } else {
