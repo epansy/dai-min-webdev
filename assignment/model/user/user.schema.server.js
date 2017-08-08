@@ -1,3 +1,4 @@
+
 module.exports = function(mongoose){
     var websiteSchema = require("../website/website.schema.server.js")(mongoose);
 
@@ -23,6 +24,10 @@ module.exports = function(mongoose){
             type : Date,
             default: Date.now
         },
+        // facebook: {
+        //     id:    String,
+        //     token: String
+        // }
         google: {
             id: String,
             token: String

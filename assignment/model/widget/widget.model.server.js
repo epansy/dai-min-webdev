@@ -3,89 +3,97 @@ module.exports = function(mongoose, pageModel) {
     var widgetModel = mongoose.model('widgetModel', widgetSchema);
 
     var api = {
-        'createWidget': createWidget,
-        'findAllWidgetsForPage': findAllWidgetsForPage,
-        'findWidgetById': findWidgetById,
-        'updateWidget': updateWidget,
-        'deleteWidget': deleteWidget,
-        'reorderWidget': reorderWidget
-    };
+     'createWidget': createWidget,
+     'findAllWidgetsForPage': findAllWidgetsForPage,
+     'findWidgetById': findWidgetById,
+     'updateWidget': updateWidget,
+     'deleteWidget': deleteWidget,
+     'reorderWidget': reorderWidget
+     };
 
-    return api;
+     return api;
 
-    function createWidget(pageId, widget) {
-        widget._page = pageId;
+     function createWidget(pageId, widget) {
 
-        return widgetModel.create(widget)
-            .then(function (widget) {
+         widget._page = pageId;
 
-                return pageModel
-                    .addWidgetToPage(pageId, widget._id);
-            });
-    }
+         return widgetModel.create(widget)
+             .then(function (widget) {
 
-    function findAllWidgetsForPage(pageId) {
+                 return pageModel
+                     .addWidgetToPage(pageId, widget._id);
+             });
+     }
 
-        return pageModel
-            .findPageById(pageId)
-            .populate('widgets')
-            .then(
-                function (page) {
+     function findAllWidgetsForPage(pageId) {
 
-                    return page.widgets;
-                }
-            )
-    }
+         // change to find widgets in page.widgets
+         return pageModel
+             .findPageById(pageId)
+             .populate('widgets')
+             .then(
+                 function (page) {
 
-    function findWidgetById(widgetId) {
-        return widgetModel.findById(widgetId);
-    }
+                     return page.widgets;
+                 }
+             )
+     }
 
-    function updateWidget(widgetId, widget) {
-        return widgetModel.update({
-            _id: widgetId
-        }, {
-            name: widget.name,
-            text: widget.text,
-            placeholder: widget.placeholder,
-            description: widget.description,
-            url: widget.url,
-            width: widget.width,
-            size: widget.size,
-            rows: widget.rows,
-            formatted: widget.formatted
-        });
-    }
+     function findWidgetById(widgetId) {
+         return widgetModel.findById(widgetId);
+     }
 
-    function deleteWidget(widgetId) {
-        //var pageId = widgetModel.findById(widgetId)._page;
+     function updateWidget(widgetId, widget) {
+         return widgetModel.update({
+             _id: widgetId
+         }, {
+             name: widget.name,
+             text: widget.text,
+             placeholder: widget.placeholder,
+             description: widget.description,
+             url: widget.url,
+             width: widget.width,
+             size: widget.size,
+             rows: widget.rows,
+             formatted: widget.formatted
+         });
+     }
 
-        return widgetModel
-            .remove({_id: widgetId})
-            .then(function (status) {
-                return pageModel
-                    .removeWidgetFromPage(pageId, widgetId);
-            })
-    }
+     function deleteWidget(pageId, widgetId) {
+         // var pageId = widgetModel
+         //     .findById(widgetId)._page;
 
-    function reorderWidget(pageId, start, end) {
+         return widgetModel
+             .remove({_id: widgetId})
+             .then(function (status) {
+                 return pageModel
+                     .removeWidgetFromPage(pageId, widgetId);
+             })
+     }
 
-        return pageModel
-            .findPageById(pageId)
-            .then(
-                function (page) {
-                    if (start && end) {
-                        if (end >= page.widgets.length) {
-                            var k = end - page.widgets.length;
-                            while ((k--) + 1) {
-                                page.widgets.push(undefined);
-                            }
-                        }
-                        page.widgets.splice(end, 0, page.widgets.splice(start, 1)[0]);
-                        return page.save();
-                    }
-                }
-            )
-    }
+     function reorderWidget(pageId, start, end) {
+
+         return pageModel
+             .findPageById(pageId)
+             .then(
+                 function (page) {
+
+                     if (start && end) {
+                         // console.log(page.widgets);
+                         // console.log("come into if condition");
+                         if (end >= page.widgets.length) {
+                             var k = end - page.widgets.length;
+                             while ((k--) + 1) {
+                                 page.widgets.push(undefined);
+                             }
+                         }
+                         page.widgets.splice(end, 0, page.widgets.splice(start, 1)[0]);
+
+                         // console.log(page.widgets);
+                         return page.save();
+                     }
+                 }
+             )
+     }
 
 };

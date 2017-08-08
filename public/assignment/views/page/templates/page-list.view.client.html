@@ -1,26 +1,23 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <div class="navbar-text pull-left">
-            <a href="#!/website" class="cl-text-black cl-icon-padding">
-          <span class="glyphicon glyphicon-chevron-left">
-          </span>
+        <div class="navbar-text pull-left margin-left">
+            <a href="#!/website" class="cl-text-black">
+                <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
-        <div class="navbar-text pull-right">
-            <a href="#!/website/{{model.wid}}/page/new" class="cl-icon-padding cl-text-black">
-          <span class="glyphicon glyphicon-plus">
-          </span>
-            </a>
-        </div>
-        <a class="navbar-brand cl-text-white cl-text-bold" href="#">
+        <a class="navbar-brand cl-text-bold">
             Pages
         </a>
+        <div class="navbar-text pull-right cl-icon-padding">
+            <a href="#!/website/{{model.wid}}/page/new" class="cl-text-black">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </div>
     </div>
 </nav>
 
-
-<div class="container">
-    <ul class="list-group cl-list-group-borderless">
+<div class="container-fluid">
+    <ul class="list-group borderless">
         <li ng-repeat="page in model.pages" class="list-group-item cl-list-item-borderless">
             <a href="#!/website/{{model.wid}}/page/{{page._id}}">
                 <span class="glyphicon glyphicon-cog pull-right"></span>
@@ -32,14 +29,12 @@
     </ul>
 </div>
 
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container-fluid row">
-        <div class="pull-right navbar-text">
-
-            <a href="#!/profile" class="tv-icon-padding">
+<nav class="navbar navbar-fixed-bottom navbar-default">
+    <div class="container-fuild">
+        <div class="navbar-text pull-right">
+            <a href="#!/profile" class="cl-text-blue cl-icon-padding">
                 <span class="glyphicon glyphicon-user"></span>
             </a>
-
         </div>
     </div>
 </nav>

@@ -13,15 +13,18 @@
         return service;
 
         function createWidget(pageId, widget) {
+            // console.log("to service");
             var url = "/api/page/" + pageId + "/widget";
             return $http.post(url, widget)
                 .then(function (response) {
+                    // console.log("have response");
                     return response.data;
                 });
         }
 
         function findWidgetsByPageId(pageId) {
             var url = "/api/page/" + pageId + "/widget";
+
             return $http.get(url)
                 .then(function (response) {
                     return response.data;
@@ -44,8 +47,8 @@
                 })
         }
 
-        function deleteWidget(widgetId) {
-            var url = "/api/widget/" + widgetId;
+        function deleteWidget(pageId, widgetId) {
+            var url = "/api/page/" + pageId + "/widget/" + widgetId;
             return $http.delete(url)
                 .then(function (response) {
                     return response.data;

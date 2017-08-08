@@ -5,15 +5,15 @@
 
     function WebsiteService($http) {
 
-            var services = {
-                'createWebsite': createWebsite,
-                'findWebsitesByUser': findWebsitesByUser,
-                'findWebsiteById': findWebsiteById,
-                'updateWebsite': updateWebsite,
-                'deleteWebsite': deleteWebsite,
-                'deleteWebsitesByUser': deleteWebsitesByUser
-            };
-            return services;
+        var services = {
+            'createWebsite': createWebsite,
+            'findWebsitesByUser': findWebsitesByUser,
+            'findWebsiteById': findWebsiteById,
+            'updateWebsite': updateWebsite,
+            'deleteWebsite': deleteWebsite,
+            'deleteWebsitesByUser': deleteWebsitesByUser
+        };
+        return services;
 
         function createWebsite(userId, website) {
             var url = "/api/user/" + userId + "/website";
@@ -43,16 +43,16 @@
         }
 
         function updateWebsite(websiteId, website) {
+            console.log("do update website");
             var url = "/api/website/" + websiteId;
             return $http.put(url, website)
                 .then(function (response) {
-                    var website = response.data;
-                    return website;
+                    return response.data;
                 });
         }
 
-        function deleteWebsite(websiteId) {
-            var url = "/api/website/" + websiteId;
+        function deleteWebsite(userId, websiteId) {
+            var url = "/api/user/" + userId + "/website/" + websiteId;
             return $http.delete(url)
                 .then(function (response) {
                     return response.data;

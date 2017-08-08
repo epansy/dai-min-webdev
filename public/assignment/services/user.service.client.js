@@ -5,7 +5,7 @@
 
     function UserService($http) {
         var services = {
-            "createUser": createUser,
+            // "createUser": createUser,
             "findUserById": findUserById,
             "findUserByUsername": findUserByUsername,
             "findUserByCredentials": findUserByCredentials,
@@ -16,16 +16,11 @@
             "login":login,
             "logout" : logout,
             "register" : register
+            // "checkLoggedIn" : checkLoggedIn
         };
         return services;
 
-        function createUser(user) {
-            var url = "/api/user/";
-            return $http.post(url)
-                .then(function (response) {
-                    return response.data;
-                });
-        }
+        // security
 
         function login(username, password) {
             var url = "/api/login";
@@ -38,17 +33,17 @@
                     return response.data;
                 });
         }
-
+        
         function logout() {
-            var url = "/api/logout";
+            var url = "api/logout";
             return $http.post(url)
                 .then(function (response) {
                     return response.data;
                 });
         }
-
+        
         function register(user) {
-            var url = "/api/register";
+            var url = "api/register";
             return $http.post(url, user)
                 .then(function (response) {
                     return response.data;
@@ -58,6 +53,16 @@
         function setCurrentUser(user) {
             $rootScope.currentUser = user;
         }
+        //
+
+        // function createUser(user) {
+        //     var url = "/api/user";
+        //     return $http.post(url, user)
+        //         .then(function (response) {
+        //             return response.data;
+        //         });
+        //
+        // }
 
         function findUserById(userId) {
             var url = "/api/user/" + userId;
@@ -99,6 +104,7 @@
                 .then(function (response) {
                     return response.data;
                 });
+            // return $http.put(url, user);
         }
 
         function deleteUser(userId) {
@@ -109,5 +115,4 @@
                 });
         }
     }
-
 })();

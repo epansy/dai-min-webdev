@@ -11,14 +11,14 @@
 
         function login(username, password) {
             UserService
-            // .findUserByCredentials(username, password)
+                // .findUserByCredentials(username, password)
                 .login(username, password)
                 .then(function (user) {
                         $location.url("/profile");
                     },
                     function (error) {
                         vm.error = "Username does not exist.";
-                    });
+                });
         }
     }
 
@@ -42,6 +42,9 @@
                     function (user) {
                         if (user !== null) {
                             vm.error = "Username already exists.";
+                            $timeout(function () {
+                                vm.error = null;
+                            }, 3000);
                             return;
                         } else {
                             var user = {
@@ -51,6 +54,7 @@
                                 lastName: "",
                                 email: ""
                             };
+                            // return the promise
                             return UserService
                                 .register(user);
                         }
@@ -79,6 +83,9 @@
                     $location.url('/login');
                 }, function () {
                     vm.error = "Unable to remove this user.";
+                    $timeout(function () {
+                        vm.error = null;
+                    }, 3000);
                 });
         }
 
@@ -92,7 +99,7 @@
                     }, 3000);
                 });
         }
-
+        
         function logout() {
             UserService
                 .logout()

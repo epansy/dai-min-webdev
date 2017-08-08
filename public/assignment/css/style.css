@@ -2,6 +2,7 @@ body {
     padding-top: 70px;
     padding-bottom: 70px;
 }
+
 input.form-control {
     margin-bottom: 5px;
 }
@@ -39,9 +40,17 @@ a:hover{
     font-weight: bold;
 }
 
+.cl-text-large{
+    font-size :30px;
+}
+
+.cl-text-medium{
+    font-size: 24px;
+}
+
 .cl-icon-padding {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .cl-header-padding{
@@ -86,19 +95,22 @@ a:hover{
     top: 0px;
     right: 0px;
     z-index: 10;
+    /*background-color: white;*/
+}
+.cl-background-white{
     background-color: white;
 }
 .cl-zero-right-padding{
     padding-right: 0px;
 }
 
-.cl-list-item-borderless {
-    border-top: 0 none;
-    border-bottom: 0 none;
-    border-left: 0 none;
-    border-right: 0 none;
+.cl-zero-top-padding{
+    padding-top: 0px;
 }
 
+.borderless .list-group-item {
+    border: none;
+}
 
 .margin-left {
     margin-left: 0px;
@@ -127,11 +139,30 @@ a:hover{
     color: darkslategray;
 }
 
-.cl-widget-images{
-    display: inline;
-    width: 85%;
-    z-index: 100;
-    position: relative;
+.col4-style-blue {
+    overflow-y: scroll;
+    top: 0px;
+    bottom: 0px;
+    position: absolute;
+    left: 0px;
+    margin-top: 50px;
+    padding-top: 15px;
+    margin-bottom: 50px;
+    border-right:1px solid #cecece;
+}
+
+.ta-editor.form-control.myform1-height, .ta-scroll-window.form-control.myform1-height  {
+    min-height: 300px;
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+}
+
+.form-control.myform1-height > .ta-bind {
+    height: auto;
+    min-height: 300px;
+    padding: 6px 12px;
 }
 
 .youtube-widget {
@@ -139,7 +170,6 @@ a:hover{
     padding-bottom: 56.25%; /* 16:9 */
     height: 0;
 }
-
 .youtube-widget iframe {
     position: absolute;
     top: 0;

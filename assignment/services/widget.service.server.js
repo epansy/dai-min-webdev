@@ -3,7 +3,7 @@ module.exports = function(app, models){
     var multer = require('multer'); // npm install multer --save
     var upload = multer({ dest: __dirname+'/../../public/assignment/uploads' });
 
-    var widgetModel = models.widgetModel;
+    var model = models.widgetModel;
 
     // POST call
     app.post("/api/page/:pid/widget", createWidget);
@@ -16,7 +16,7 @@ module.exports = function(app, models){
     app.put("/api/widget/:wgid", updateWidget);
 
     // DELETE call
-    app.delete("/api/widget/:wgid", deleteWidget);
+    app.delete("/api/page/:pid/widget/:wgid", deleteWidget);
 
     // upload image
     app.post ("/api/upload", upload.single('myFile'), uploadImage);
@@ -30,7 +30,7 @@ module.exports = function(app, models){
         var pid = req.params.pid;
         var widget = req.body;
 
-        widgetModel
+        model
             .createWidget(pid, widget)
             .then(
                 function (widget) {
@@ -50,10 +50,12 @@ module.exports = function(app, models){
 
     function findAllWidgetsForPage(req, res) {
         var pid = req.params.pid;
-        widgetModel
+
+        model
             .findAllWidgetsForPage(pid)
             .then(
                 function (widgets) {
+                    // console.log(widgets);
                     if(widgets) {
                         res.json(widgets);
                     } else {
@@ -68,8 +70,9 @@ module.exports = function(app, models){
 
     function findWidgetById(req, res) {
         var wgid = req.params.wgid;
+        // console.log("in findWidgetById")
 
-        widgetModel
+        model
             .findWidgetById(wgid)
             .then(
                 function (widget) {
@@ -84,13 +87,15 @@ module.exports = function(app, models){
                     res.sendStatus(400).send("widget service server, findWidgetById error");
                 }
             );
+
     }
 
     function updateWidget(req, res) {
 
         var wgid = req.params.wgid;
         var widget = req.body;
-        widgetModel
+
+        model
             .updateWidget(wgid, widget)
             .then(
                 function (widget) {
@@ -100,13 +105,16 @@ module.exports = function(app, models){
                     res.status(400).send("widget service server, updateWidget error");
                 }
             );
+
     }
 
     function deleteWidget(req, res) {
+        var pid = req.params.pid;
         var wgid = req.params.wgid;
+
         if(wgid){
-            widgetModel
-                .deleteWidget(wgid)
+            model
+                .deleteWidget(pid, wgid)
                 .then(
                     function (status){
                         res.sendStatus(200);
@@ -116,11 +124,12 @@ module.exports = function(app, models){
                     }
                 );
         } else{
+            // Precondition Failed. Precondition is that the user exists.
             res.sendStatus(412);
         }
+
     }
 
-    app.post ("/api/upload", upload.single('myFile'), uploadImage);
     function uploadImage(req, res) {
 
         var widgetId      = req.body.widgetId;
@@ -139,6 +148,7 @@ module.exports = function(app, models){
         var size          = myFile.size;
         var mimetype      = myFile.mimetype;
 
+        // widget = getWidgetById(widgetId);
         var url = 'uploads/'+filename;
 
         // when try to create a new image
@@ -149,25 +159,31 @@ module.exports = function(app, models){
                 width: width
             };
 
-            widgetModel
+            model
                 .createWidget(pageId, widget)
                 .then(
                     function (widget) {
+                        // console.log(widget);
                         if(widget){
+                            // console.log("in if branch");
                             res.json(widget);
+                            // console.log("touch");
+                            // res.send(200);
                         } else {
+                            // console.log("in else branch");
                             widget = null;
                             res.send(widget);
                         }
                     }
                     ,
                     function (error) {
+                        // console.log("in error branch");
                         res.sendStatus(400).send("widget service server, upload error");
                     }
                 )
         } else {
             // when trying to edit existing image
-            widgetModel
+            model
                 .findWidgetById(widgetId)
                 .then(
                     function (widget) {
@@ -189,27 +205,32 @@ module.exports = function(app, models){
 
         }
 
-        var callbackUrl  = "/#!/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget";
+        var callbackUrl  = "/#!/website/"+websiteId+"/page/"+pageId+"/widget";
         res.redirect(callbackUrl);
     }
 
     function reorderWidgets(req, res) {
-        var pid = req.params.pid;
+        // get widgets by pageId
+        var pageId = req.params.pid;
 
-        var index1 = req.query.start;
-        var index2 = req.query.end;
 
-        widgetModel
-            .reorderWidgets(pid, index1, index2)
+        // index1 and index2 are index in pageWidgets
+        var index1 = req.query.initial;
+        var index2 = req.query.final;
+        // console.log("in service: " + index1 + " " + index2);
+
+        model
+            .reorderWidget(pageId, index1, index2)
             .then(
-                function (status) {
-                res.send(status);
+                function (page) {
+                    // console.log("in service");
+                    // console.log(page.widgets);
+                    res.sendStatus(202);
                 },
                 function (error) {
                     res.status(400).send("Cannot reorder widgets");
                 }
-            );
-
+            )
     }
 
 };

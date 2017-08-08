@@ -7,6 +7,7 @@
 
     function PageListController($routeParams, PageService, loggedin) {
         var vm = this;
+        // vm.uid = $routeParams.uid;
         vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         PageService
@@ -20,6 +21,7 @@
 
     function NewPageController($routeParams, $timeout, $location, PageService, loggedin) {
         var vm = this;
+        // vm.uid = $routeParams.uid;
         vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
 
@@ -38,6 +40,7 @@
                 name: pageName,
                 description: pageTitle
             };
+
             PageService
                 .createPage(vm.wid, page)
                 .then(function () {
@@ -46,8 +49,9 @@
         }
     }
 
-    function EditPageController($routeParams, $location, PageService, loggedin) {
+    function EditPageController($routeParams, $location, $timeout, PageService, loggedin) {
         var vm = this;
+        // vm.uid = $routeParams.uid;
         vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
@@ -61,7 +65,7 @@
                 .then(function (page) {
                     vm.page = page;
                 }, function (error) {
-                    vm.error = "Cannot find page";
+                    vm.error = "Cannot find that page by ID";
                     $timeout(function () {
                         vm.error = null;
                     }, 3000);
@@ -70,6 +74,7 @@
         init();
 
         function updatePage(newPage) {
+
             PageService
                 .updatePage(vm.pid, newPage)
                 .then(function () {
@@ -78,11 +83,11 @@
         }
 
         function deletePage(page) {
-            PageService.deletePage(page._id)
+            PageService.deletePage(vm.wid, page._id)
                 .then(
                     function () {
                         $location.url("/website/" + vm.wid + "/page");
-                    },
+                },
                     function() {
                         vm.error = "Cannot delete this page";
                         $timeout(function () {

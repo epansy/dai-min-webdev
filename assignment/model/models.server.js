@@ -1,26 +1,19 @@
-//export `heroku config -s`
-module.exports = function() {
+
+module.exports = function(mongoose) {
     var connectionString =  null;
 
     if (process.env.MONGODB_URI) {
-        connectionString = 'mongodb://<admin>:<15926>@ds137141.mlab.com:37141/heroku_xd08mp2p';
+        connectionString = 'mongodb://cs5610-webdev:webdev@ds145892.mlab.com:45892/heroku_pxg85hjc';
     }
     else
     {
-        connectionString = 'mongodb://localhost:27017/cs5610'
+        connectionString = 'mongodb://localhost:27017/cs5610-webdev'
     }
 
-    var mongoose = require('mongoose');
     mongoose.connect(connectionString, {
         useMongoClient: true
     });
     mongoose.Promise = require('q').Promise;
-
-    var db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function() {
-        // we're connected!
-    });
 
     var userModel = require("./user/user.model.server.js")(mongoose);
     var websiteModel = require("./website/website.model.server.js")(mongoose, userModel);
@@ -36,3 +29,6 @@ module.exports = function() {
 
     return models;
 };
+
+console.log("models.server.js is running");
+

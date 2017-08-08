@@ -1,9 +1,10 @@
-<nav class="navbar narbar-default navbar-fixed-top cl-blue-navbar">
+<nav class="navbar navbar-fixed-top cl-blue-navbar">
     <div class="container-fluid">
-        <a class="navbar-brand cl-navbar-text cl-text-white cl-text-bold" href="#">
+        <a class="navbar-brand cl-text-white cl-text-bold">
             Profile
         </a>
-        <a ng-click="model.updateUser(model.user)" class="navbar-link navbar-text cl-text-white pull-right cl-navbar-text">
+        <a ng-click="model.updateUser(model.user)"
+           class="navbar-link navbar-text cl-text-white pull-right cl-icon-padding">
             <span class="glyphicon glyphicon-ok"></span>
         </a>
     </div>
@@ -39,9 +40,6 @@
                id="lName" required>
     </form>
 
-    <a ng-click="model.updateUser(model.user)" class="btn btn-success btn-block">
-        Update
-    </a>
     <a ng-click="model.logout()" class="btn btn-danger btn-block">
         Logout
     </a>
@@ -59,7 +57,7 @@
 
 <nav class="navbar navbar-fixed-bottom cl-blue-navbar">
     <div class="container-fuild">
-        <a href="#!/profile" class="navbar-link navbar-text pull-right  cl-text-white cl-icon-padding">
+        <a href="#!/profile" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
             <span class="glyphicon glyphicon-user"></span>
         </a>
     </div>

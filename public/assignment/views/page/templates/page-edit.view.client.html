@@ -1,28 +1,24 @@
-
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid row">
-
-        <div class="navbar-text pull-left">
-            <a href="#!/website/{{model.wid}}/page" class="cl-text-black cl-icon-padding">
-          <span class="glyphicon glyphicon-chevron-left">
-          </span>
+    <div class="container-fluid">
+        <div class="navbar-text pull-left margin-left">
+            <a href="#!/website/{{model.wid}}/page" class="cl-text-black">
+                <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
-        <div class="navbar-text pull-right">
-            <a ng-click="model.updatePage(model.page)" class="cl-icon-padding cl-text-black">
-          <span class="glyphicon glyphicon-ok">
-          </span>
-            </a>
-        </div>
-        <a class="navbar-brand cl-text-white cl-text-bold" href="#">
-            Pages
+        <a class="navbar-brand cl-text-bold">
+            Edit Page
         </a>
+        <div class="navbar-text pull-right cl-icon-padding">
+            <a ng-click="model.updatePage(model.page)" class="cl-text-black">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+        </div>
     </div>
 </nav>
 
-
-<div class="container">
+<div class="container-fluid">
     <div ng-show="model.updated" class="alert alert-success" role="alert">{{model.updated}}</div>
+    <div ng-show="model.error" class="alert alert-danger" role="alert">{{model.error}}</div>
     <label for="pageName">Page Name</label>
     <input ng-model="model.page.name"
            type="text"
@@ -43,14 +39,12 @@
     </a>
 </div>
 
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container-fluid row">
-        <div class="pull-right navbar-text">
-
-            <a href="#!/profile" class="tv-icon-padding">
+<nav class="navbar navbar-fixed-bottom navbar-default">
+    <div class="container-fuild">
+        <div class="navbar-text pull-right cl-icon-padding">
+            <a href="#!/profile" class="cl-text-blue">
                 <span class="glyphicon glyphicon-user"></span>
             </a>
-
         </div>
     </div>
 </nav>

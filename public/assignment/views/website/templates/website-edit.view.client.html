@@ -1,36 +1,45 @@
 <nav class="navbar navbar-fixed-top cl-blue-navbar">
-    <div class="row">
-        <div class="col-xs-4 hidden-xs">
-            <div class="container-fluid">
-                <p class="navbar-text pull-left">
-                    <a href="#!/website" class="navbar-link cl-text-white">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </a>
-                </p>
-                <a class="cl-text-white navbar-brand cl-text-bold" href="#">
+    <div class="row container-fluid">
+        <div class="col-sm-4 hidden-xs">
+            <div class="navbar-text pull-left cl-text-white margin-left">
+                <a href="#!/website" class="cl-text-white">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+            </div>
+            <div class="navbar-header">
+                <a class="cl-text-white navbar-brand cl-text-bold">
                     Websites
                 </a>
-                <a href="#!/website/new" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+            </div>
+            <div class="navbar-text pull-right margin-right">
+                <a href="#!/website/new" class="cl-text-white">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </div>
         </div>
-        <div class="col-xs-8">
-            <div class="container-fluid">
-                <a class="cl-text-white navbar-brand cl-text-bold" href="#">
-                    Edit Websites
+        <div class="col-sm-8">
+            <div class="navbar-text pull-left margin-left">
+                <a href="#!/website" class="cl-text-white visible-xs">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
-                <a ng-click="model.updateWebsite(model.website)" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+            </div>
+            <div class="navbar-text pull-right margin-right">
+                <a class="cl-text-white" ng-click="model.updateWebsite(model.website)">
                     <span class="glyphicon glyphicon-ok"></span>
+                </a>
+            </div>
+            <div class="navbar-header">
+                <a class="cl-text-white navbar-brand cl-text-bold">
+                    Edit Website
                 </a>
             </div>
         </div>
     </div>
 </nav>
 
-<div class="contain-fluid">
-    <div class="col-xs-4 hidden-xs">
-        <ul class="list-group">
+<div class="row container-fluid">
+    <div class="col-sm-4 hidden-xs col4-style-blue">
+        <ul class="list-group borderless">
             <li ng-repeat="website in model.websites" class="list-group-item cl-list-item-borderless">
                 <a href="#!/website/{{website._id}}">
                     <span class="glyphicon glyphicon-cog pull-right"></span>
@@ -41,8 +50,9 @@
             </li>
         </ul>
     </div>
-    <div class="col-xs-8">
+    <div class="col-xs-12 col-sm-8 pull-right">
         <div ng-show="model.updated" class="alert alert-success" role="alert">{{model.updated}}</div>
+        <div ng-show="model.error" class="alert alert-danger" role="alert">{{model.error}}</div>
         <form>
             <div class="form-group">
                 <label for="websiteName">Website Name</label>
@@ -55,7 +65,7 @@
 
             <div class="form-group">
                 <label for="websiteDesc">Website Description</label>
-                <textarea ng-model="model.website.desc"
+                <textarea ng-model="model.website.description"
                           class="form-control"
                           id="websiteDesc"
                           rows="5"
@@ -68,6 +78,7 @@
            ng-click="model.deleteWebsite(model.website)">Delete</a>
     </div>
 </div>
+
 
 <nav class="navbar navbar-fixed-bottom cl-blue-navbar">
     <div class="container-fuild">

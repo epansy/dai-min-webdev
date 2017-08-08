@@ -4,6 +4,7 @@
         .directive("jgaSortable", makeSortable);
 
     function makeSortable() {
+
         function linker(scope, element, attrb) {
             var start = -1;
             var end = -1;
@@ -15,9 +16,7 @@
                     stop: function (event, ui) {
                         end = $(ui.item).index();
                         console.log(start, end);
-                        // if(start >= end) {
-                        //     start--;
-                        // }
+
                         if(end >= start){
                             end = end + 1;
                         }

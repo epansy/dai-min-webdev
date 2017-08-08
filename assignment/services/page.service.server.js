@@ -1,7 +1,6 @@
 module.exports = function(app, models){
 
-    var pageModel = models.pageModel;
-
+    var model = models.pageModel;
 
     //POST calls
     app.post("/api/website/:wid/page", createPage);
@@ -14,36 +13,43 @@ module.exports = function(app, models){
     app.put("/api/page/:pid", updatePage);
 
     //DELETE calls
-    app.delete("/api/page/:pid", deletePage);
+    app.delete("/api/website/:wid/page/:pid", deletePage);
 
     //API calls implementation
     function createPage(req, res) {
         var wid = req.params.wid;
         var page = req.body;
 
-        pageModel
+        model
             .createPage(wid, page)
             .then(
                 function (page) {
                     if(page){
+
                         res.json(page);
+
                     } else {
+
                         page = null;
                         res.send(page);
                     }
                 },
                 function (error) {
+
                     res.sendStatus(400).send("page service server, createPage error");
                 }
             )
+
     }
 
     function findAllPagesForWebsite(req, res) {
         var wid = req.params.wid;
-        pageModel
+
+        model
             .findAllPagesForWebsite(wid)
             .then(
                 function (pages) {
+
                     if(pages) {
                         res.json(pages);
                     } else {
@@ -55,12 +61,13 @@ module.exports = function(app, models){
                     res.sendStatus(400).send("page service server, findAllPagesForWebsite error");
                 }
             )
+
     }
 
     function findPageById(req, res) {
         var pid = req.params.pid;
 
-        pageModel
+        model
             .findPageById(pid)
             .then(
                 function (page) {
@@ -75,26 +82,33 @@ module.exports = function(app, models){
                     res.sendStatus(400).send("page service server, findPageById error");
                 }
             );
+
     }
 
     function updatePage(req, res) {
         var pid = req.params.pid;
         var page = req.body;
 
-        pageModel
+        model
             .updatePage(pid, page)
-            .then(function (page) {
-                res.json(page);
-            }, function (status) {
-                res.status(400).send("page service server, updatePage error");
-            });
+            .then(
+                function (page) {
+                    res.json(page);
+                },
+                function (error) {
+                    res.status(400).send("page service server, updatePage error");
+                }
+            );
+
     }
 
     function deletePage(req, res) {
+        var wid = req.params.wid;
         var pid = req.params.pid;
+
         if(pid){
             model
-                .deletePage(pid)
+                .deletePage(wid, pid)
                 .then(
                     function (status){
                         res.sendStatus(200);
@@ -104,8 +118,9 @@ module.exports = function(app, models){
                     }
                 );
         } else{
+            // Precondition Failed. Precondition is that the user exists.
             res.sendStatus(412);
         }
-    }
 
+    }
 };

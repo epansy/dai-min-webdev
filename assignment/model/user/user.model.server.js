@@ -17,6 +17,8 @@ module.exports = function(mongoose){
 
     return api;
 
+    // Function Definition Section
+
     function createUser(user){
         user.roles = ['USER'];
         user.websites = [];

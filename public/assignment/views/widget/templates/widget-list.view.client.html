@@ -1,64 +1,52 @@
-
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid row">
-
-        <div class="navbar-text pull-left">
-            <a href="#!/website/{{model.wid}}/page" class="cl-text-black cl-icon-padding">
-          <span class="glyphicon glyphicon-chevron-left">
-          </span>
+    <div class="container-fluid">
+        <div class="navbar-text pull-left margin-left">
+            <a href="#!/website/{{model.wid}}/page" class="cl-text-black">
+                <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
-        <div class="navbar-text pull-right">
-            <a href="#!/website/{{model.wid}}/page/{{model.pid}}/widget/new"
-               class="cl-icon-padding cl-text-black">
-          <span class="glyphicon glyphicon-plus">
-          </span>
-            </a>
-        </div>
-        <a class="navbar-brand cl-text-white cl-text-bold" href="#">
+        <a class="navbar-brand cl-text-bold">
             Widgets
         </a>
+        <div class="navbar-text pull-right cl-icon-padding">
+            <a href="#!/website/{{model.wid}}/page/{{model.pid}}/widget/new" class="cl-text-black">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </div>
     </div>
 </nav>
 
 
 <div wbdv-sortable="model.pid" class="container cl-container-padding">
     <div ng-repeat="widget in model.widgets" class="margin-bottom">
-            <div class="widget-toolbar">
-                <a href="#!/website/{{model.wid}}/page/{{model.pid}}/widget/{{widget._id}}">
-                    <span class="glyphicon glyphicon-cog"></span>
-                </a>
-                <span class="glyphicon glyphicon-menu-hamburger"></span>
+        <div class="widget-toolbar">
+            <a href="#!/website/{{model.wid}}/page/{{model.pid}}/widget/{{widget._id}}">
+                <span class="glyphicon glyphicon-cog"></span>
+            </a>
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </div>
+        <div ng-switch="widget.widgetType">
+            <div ng-switch-when="HEADING">
+                <div ng-include="'views/widget/templates/widget-heading.view.client.html'"></div>
             </div>
-            <div ng-switch="model.widgetType">
-                <div ng-switch-when="HEADING">
-                    <div ng-include="'views/widget/templates/heading/widget-heading.view.client.html'"></div>
-                </div>
-                <div ng-switch-when="IMAGE">
-                    <div ng-include="'views/widget/templates/image/widget-image.view.client.html'"></div>
-                </div>
-                <div ng-switch-when="YOUTUBE" class="youtube-widget">
-                    <div ng-include="'views/widget/templates/youtube/widget-youtube.view.client.html'"></div>
-                </div>
-                <div ng-switch-when="HTML">
-                    <div ng-include="'views/widget/templates/html/widget-html.view.client.html'"></div>
-                </div>
-                <div ng-switch-when="TEXT">
-                    <div ng-if="widget.formatted" text-angular ta-toolbar="..."></div>
-                    <input ng-if="!widget.formatted && (!widget.rows || widget.rows===1)"
-                           placeholder="{{widget.textInput.placeholder}}" class="form-control"/>
-                    <textarea ng-if="!widget.formatted && (widget.rows > 1)"
-                              rows="{{widget.rows}}" placeholder="{{widget.placeholder}}"
-                              class="form-control">{{widget.text}}</textarea>
-                </div>
+            <div ng-switch-when="IMAGE">
+                <div ng-include="'views/widget/templates/widget-image.view.client.html'"></div>
             </div>
-
+            <div ng-switch-when="YOUTUBE" class="youtube-widget">
+                <div ng-include="'views/widget/templates/widget-youtube.view.client.html'"></div>
+            </div>
+            <div ng-switch-when="HTML">
+                <div ng-include="'views/widget/templates/widget-html.view.client.html'"></div>
+            </div>
+            <div ng-switch-when="TEXT">
+                <div ng-include="'views/widget/templates/widget-text.view.client.html'"></div>
+            </div>
+        </div>
     </div>
-
 </div>
 
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container-fluid row">
+<nav class="navbar navbar-fixed-bottom navbar-default">
+    <div class="container-fuild">
         <div class="navbar-text pull-left cl-icon-padding">
             <a class="cl-text-black">
                 <span class="glyphicon glyphicon-play">&nbsp</span>
@@ -68,8 +56,8 @@
             </a>
         </div>
 
-        <div class="pull-right navbar-text">
-            <a href="#!/profile" class="tv-icon-padding">
+        <div class="navbar-text pull-right cl-icon-padding">
+            <a href="#!/profile" class="cl-text-blue">
                 <span class="glyphicon glyphicon-user"></span>
             </a>
         </div>

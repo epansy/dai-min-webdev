@@ -14,14 +14,14 @@ module.exports = function(mongoose, websiteModel){
 
     return api;
 
-
     function createPage(websiteId, page) {
         page._website = websiteId;
         return pageModel.create(page)
-            .then(function (page) {
-                    return websiteModel
-                        .addPageToWebsite(websiteId, page._id);
-                });
+            .then(
+                function (page) {
+                    return websiteModel.addPageToWebsite(websiteId, page._id);
+                }
+            );
     }
 
     function findAllPagesForWebsite(websiteId) {
@@ -41,13 +41,12 @@ module.exports = function(mongoose, websiteModel){
         }, {
             name: page.name,
             title: page.title,
-            description: page.desc
+            description: page.description
         });
     }
 
-    function deletePage(pageId) {
-        //var websiteId = pageModel.findOne({_id: pageId})._website;
-
+    function deletePage(websiteId, pageId) {
+        // var websiteId = pageModel.findOne({_id: pageId})._website;
         return pageModel
             .remove({_id: pageId})
             .then(function (status) {
@@ -56,17 +55,20 @@ module.exports = function(mongoose, websiteModel){
             });
     }
 
-
     function removeWidgetFromPage(pageId, widgetId) {
         pageModel
             .findById(pageId)
-            .then(function (page) {
-                var index = page.widgets.indexOf(widgetId);
-                page.widgets.splice(index, 1);
-                page.save();
-            }, function (error) {
-                console.log(error);
-            });
+            .then(
+                function (page) {
+                    // page.widgets.pull(widgetId);
+                    var index = page.widgets.indexOf(widgetId);
+                    page.widgets.splice(index, 1);
+                    page.save();
+                },
+                function (error) {
+                    console.log("Page model, removeWidgetFromPage error");
+                }
+            );
     }
 
     function addWidgetToPage(pageId, widgetId) {

@@ -1,6 +1,7 @@
 module.exports = function(app, models){
 
-    var websiteModel = models.websiteModel;
+
+    var model = models.websiteModel;
 
     //POST Calls
     app.post('/api/user/:uid/website',createWebsite);
@@ -13,37 +14,47 @@ module.exports = function(app, models){
     app.put('/api/website/:wid',updateWebsite);
 
     //DELETE Calls
-    app.delete('/api/website/:wid',deleteWebsite);
+    app.delete('/api/user/:uid/website/:wid',deleteWebsite);
 
 
+    /*API calls implementation*/
     function createWebsite(req, res) {
         var uid = req.params.uid;
         var website = req.body;
 
-        websiteModel
+
+        model
             .createWebsiteForUser(uid, website)
             .then(
                 function (website) {
                     if(website){
+                        // console.log("in if branch");
                         res.json(website);
+                        // res.send(200);
                     } else {
+                        // console.log("in else branch");
                         website = null;
                         res.send(website);
                     }
-                },
-                function (error) {
-                    res.send(error);
                 }
-            );
+                ,
+                function (error) {
+                    // console.log("in error branch");
+                    res.sendStatus(400).send("website service server, createWebsiteForUser error");
+                }
+            )
+
     }
 
     function findAllWebsitesForUser(req, res) {
         var uid = req.params.uid;
+        // console.log("in service: " + uid);
 
-        websiteModel
+        model
             .findAllWebsitesForUser(uid)
             .then(
                 function (websites) {
+                    // console.log("in service: " + websites);
                     if(websites) {
                         res.json(websites);
                     } else {
@@ -55,12 +66,13 @@ module.exports = function(app, models){
                     res.sendStatus(400).send("website service server, findAllWebsitesForUser error");
                 }
             )
+
     }
 
     function findWebsiteById(req, res) {
         var wid = req.params.wid;
 
-        websiteModel
+        model
             .findWebsiteById(wid)
             .then(
                 function (website) {
@@ -75,6 +87,8 @@ module.exports = function(app, models){
                     res.sendStatus(400).send(error);
                 }
             )
+
+
     }
 
     function updateWebsite(req, res) {
@@ -82,7 +96,7 @@ module.exports = function(app, models){
         var wid = req.params.wid;
         var website = req.body;
 
-        websiteModel
+        model
             .updateWebsite(wid, website)
             .then(
                 function (website){
@@ -92,14 +106,16 @@ module.exports = function(app, models){
                     res.sendStatus(400).send("website service server, updateWebsite error");
                 }
             );
+
     }
 
     function deleteWebsite(req, res) {
+        var uid = req.params.uid;
         var wid = req.params.wid;
 
         if(wid){
-            websiteModel
-                .deleteWebsite(wid)
+            model
+                .deleteWebsite(uid, wid)
                 .then(
                     function (status){
                         res.sendStatus(200);
@@ -109,7 +125,9 @@ module.exports = function(app, models){
                     }
                 );
         } else{
+            // Precondition Failed. Precondition is that the user exists.
             res.sendStatus(412);
         }
+
     }
 };

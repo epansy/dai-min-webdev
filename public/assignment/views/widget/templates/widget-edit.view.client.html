@@ -18,28 +18,21 @@
 </nav>
 
 <div class="container">
-    <div ng-switch="model.currentWidget.widgetType">
+    <div ng-switch="model.widget.widgetType">
         <div ng-switch-when="HEADING">
-            <div ng-include src="'views/widget/templates/heading/widget-heading-edit.view.client.html'"></div>
+            <div ng-include src="'views/widget/templates/editors/widget-heading-edit.view.client.html'"></div>
         </div>
         <div ng-switch-when="IMAGE">
-            <div ng-include src="'views/widget/templates/image/widget-image-edit.view.client.html'"></div>
+            <div ng-include src="'views/widget/templates/editors/widget-image-edit.view.client.html'"></div>
         </div>
         <div ng-switch-when="YOUTUBE">
-            <div ng-include src="'views/widget/templates/youtube/widget-youtube-edit.view.client.html'"></div>
+            <div ng-include src="'views/widget/templates/editors/widget-youtube-edit.view.client.html'"></div>
         </div>
         <div ng-switch-when="HTML">
-            <div ng-include src="'views/widget/templates/html/widget-html-edit.view.client.html'"></div>
+            <div ng-include src="'views/widget/templates/editors/widget-html-edit.view.client.html'"></div>
         </div>
         <div ng-switch-when="TEXT">
-            Text
-            <input ng-model="model.widget.text" class="form-control"/>
-            Rows
-            <input ng-model="model.widget.rows" class="form-control" type="number"/>
-            Placeholder
-            <input ng-model="model.widget.placeholder" class="form-control"/>
-            Formatted
-            <input ng-model="model.widget.formatted" type="checkbox"/>
+            <div ng-include src="'views/widget/templates/editors/widget-text-edit.view.client.html'"></div>
         </div>
 
         <a class="margin-top btn btn-danger btn-block" ng-click="model.deleteWidget(model.widget)">Delete</a>
