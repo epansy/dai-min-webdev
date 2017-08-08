@@ -1,13 +1,7 @@
-# dai-min-webdev
-this repository is for WEB DEV Course Assignments and Project.
+# cs5610-webDev-chizhang
 
-Name: Min Dai
+heroku app url: https://cs5610-webdev-chizhang.herokuapp.com/
 
-Graduate student in NEU Align program. 
-
-Heroku link: https://dashboard.heroku.com/apps/dai-min-webdev
-
-Project link: http://localhost:3000/project/index.html
-
-Assignments link: http://localhost:3000/assignment/index.html
-
+admin user
+- username: admin
+- password: admin
