@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "/epansy/dai-min-webdev.git"
+    "url": "git+https://github.com/epansy/dai-min-webdev.git"
   },
   "keywords": [
     "web",
