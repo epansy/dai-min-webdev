@@ -3,7 +3,7 @@ module.exports = function(mongoose) {
     var connectionString =  null;
 
     if (process.env.MONGODB_URI) {
-        connectionString = 'mongodb://cs5610-webdev:webdev@ds145892.mlab.com:45892/heroku_pxg85hjc';
+        connectionString = 'mongodb://<admin>:<15926>@ds137141.mlab.com:37141/heroku_xd08mp2p';
     }
     else
     {
