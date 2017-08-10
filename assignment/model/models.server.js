@@ -7,7 +7,7 @@ module.exports = function(mongoose) {
     }
     else
     {
-        connectionString = 'mongodb://localhost:27017/cs5610-webdev'
+        connectionString = 'mongodb://localhost:27017/dai-min-webdev'
     }
 
     mongoose.connect(connectionString, {
